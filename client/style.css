@@ -1,3 +1,43 @@
 body {
-    background-color: ghostwhite;
+    color: blueviolet;
+    background-color: rgb(199, 247, 243);
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+input::placeholder {
+    color: blueviolet;
+}
+
+input {
+    width: 200px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid blueviolet;
+    margin: 2px;
+    height: 38px;
+    padding: 3px;
+    color: blueviolet;
+}
+
+button {
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px 20px 13px;
+    color: rgb(90, 219, 208);
+    outline: 0;
+    border: 2px solid rgb(149, 20, 175);
+    cursor: pointer;
+    position: relative;
+    background-color: rgba(190, 58, 223, 0.945);
+}
+
+.logo {
+    width: 80px;
 }
