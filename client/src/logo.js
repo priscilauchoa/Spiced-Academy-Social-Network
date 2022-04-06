@@ -2,9 +2,12 @@
 
 export default function Logo() {
     return (
-        <img
-            className="logo"
-            src="https://cdn-icons-png.flaticon.com/512/2597/2597136.png"
-        ></img>
+        <>
+            <h1>Support your Gang</h1>
+            <img
+                className="logo"
+                src="https://cdn-icons-png.flaticon.com/512/2597/2597136.png"
+            ></img>
+        </>
     );
 }
