@@ -9,7 +9,7 @@ exports.registerUser = (first, last, email, password) => {
         [first, last, email, password]
     );
 };
-exports.registerCode = (code, email) => {
+exports.registerCode = (email, code) => {
     return db.query(`INSERT INTO reset_codes (code, email) VALUES ($1, $2)`, [
         code,
         email,
@@ -18,10 +18,19 @@ exports.registerCode = (code, email) => {
 exports.getCode = () => {
     return db.query(
         `SELECT * FROM reset_codes
-WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`
+WHERE CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes';`
     );
 };
 
 exports.authenticateUser = (email) => {
     return db.query(`SELECT * FROM users WHERE users.email = $1`, [email]);
+};
+
+exports.resetPassword = (userId, newPassword) => {
+    return db.query(
+        `UPDATE users
+SET password = $2
+WHERE users.id = $1;`,
+        [userId, newPassword]
+    );
 };

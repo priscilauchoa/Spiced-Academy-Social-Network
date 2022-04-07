@@ -88,17 +88,41 @@ app.post("/password/reset/start", (req, res) => {
                 const secretCode = cryptoRandomString({
                     length: 6,
                 });
-                db.registerCode(req.body.email, secretCode).then(() => {
-                    ses.sendEmail(
-                        `Reset your password ${secretCode} `,
-                        "New password"
-                    );
-                });
+                db.registerCode(req.body.email, secretCode)
+                    .then(() => {
+                        ses.sendEmail(
+                            `Reset your password ${secretCode} `,
+                            "New password"
+                        );
+                    })
+                    .then(() => res.json({ success: true }));
             }
         })
         .catch((err) => {
             console.log("error", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/password/reset/verify", (req, res) => {
+    console.log("req.params", req.body.code);
+    db.getCode()
+        .then(({ rows }) => {
+            console.log(rows[0].email);
+
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].code == req.body.code) {
+                    console.log("correct code");
+                    db.resetPassword(req.body.password);
+                    res.json({ success: true });
+                }
+            }
+            // console.log("no code found");
             // res.json({ success: false });
+        })
+        .catch((err) => {
+            console.log("error verify code secret", err);
+            res.json({ success: false });
         });
 });
 
