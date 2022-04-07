@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class Registration extends Component {
     constructor() {
@@ -33,27 +34,28 @@ export class Registration extends Component {
         })
             .then((resp) => resp.json())
             .then((resp) => {
+                console.log(resp);
                 if (resp.success == true) {
                     location.reload();
                 } else {
-                    resp.json({ success: false });
+                    this.setState({ error: true });
                 }
             })
             .catch((err) => {
                 console.log(err);
                 // this.setState(this.state.error);
-                this.setState({
-                    [this.state.error]: true,
-                });
+                this.setState({ error: true });
             });
     }
 
     render() {
         return (
             <section>
+                <Link to="/">Register</Link>
+                <Link to="/login"> Log in</Link>
                 <h1>Register here</h1>
                 {this.state.error && (
-                    <h2>Something went wrong in the registration</h2>
+                    <h2 className="error-message">Something went wrong in the registration, please try again</h2>
                 )}
                 <form className="form">
                     <input

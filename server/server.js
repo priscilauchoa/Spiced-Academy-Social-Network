@@ -9,16 +9,15 @@ const { SESS_SECRET } = require("../secrets.json");
 const path = require("path");
 const db = require("./db");
 const {
-    requireLoggedOutUser,
-    // requireLoggedInUser,
-    // requireNoSignature,
-    // requireSignature,
+    // requireLoggedOutUser,
+    requireLoggedInUser,
 } = require("./middleware");
 
 app.use(
     cookieSession({
         secret: SESS_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
+        sameSite: true,
     })
 );
 app.use(compression());
@@ -28,8 +27,6 @@ app.use(express.json());
 
 app.post("/register.json", (req, res) => {
     hash(req.body.password).then((hashedPassword) => {
-        console.log("hashedPassword", hashedPassword);
-
         db.registerUser(
             req.body.first,
             req.body.last,
@@ -40,42 +37,43 @@ app.post("/register.json", (req, res) => {
                 req.session.userId = rows[0].id;
                 res.json({ success: true });
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err);
                 res.json({ success: false });
             });
     });
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
+app.post("/login.json", function (req, res) {
+    console.log("émail aqui", req.body.email);
+    db.authenticateUser(req.body.email)
+        .then(({ rows }) => {
+            console.log("rORWS BEFORE", rows);
+            compare(req.body.password, rows[0].password).then(() => {
+                console.log("rORWS after", rows);
+
+                req.session.userId = rows[0].id;
+                res.json({ success: true });
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ success: false });
+        });
+});
+
 app.get("/user/id.json", function (req, res) {
-    // res.json({
-    //     userId: req.session.userId,
-    // });
+    console.log(req.session.userId);
+    console.log("session id-->", req.session.userId);
     res.json({
         userId: req.session.userId,
     });
 });
-
-app.get("/logout", (req, res) => {
-    req.session = null;
-    res.redirect("/register.json");
-});
-// app.post("/login", requireLoggedOutUser, function (req, res) {
-//     // console.log("req.body------>>>", req.body);
-//     db.authenticateUser(req.body.email)
-//         .then(({ rows }) => {
-//             // return compare(req.body.password, rows[0].password).then(
-//             compare(req.body.password, rows[0].password).then((match) => {
-//                 if (match) {
-//                     req.session.userId = rows[0].id;
-//                 } else {
-//                     res.redirect("/register.json");
-//                 }
-//             });
-//         })
-//         .catch(() => {
-//             console.log("authentication error2--->", e);
-//         });
-// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

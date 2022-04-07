@@ -7,6 +7,7 @@ fetch("/user/id.json")
     .then((response) => response.json())
     .then((data) => {
         console.log("data", data.userId);
+
         if (!data.userId) {
             ReactDOM.render(
                 <>

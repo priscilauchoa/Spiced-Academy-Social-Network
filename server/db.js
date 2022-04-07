@@ -9,3 +9,7 @@ exports.registerUser = (first, last, email, password) => {
         [first, last, email, password]
     );
 };
+
+exports.authenticateUser = (email) => {
+    return db.query(`SELECT * FROM users WHERE users.email = $1`, [email]);
+};

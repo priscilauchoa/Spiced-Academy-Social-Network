@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class Login extends Component {
     constructor() {
@@ -36,7 +37,7 @@ export class Login extends Component {
                 if (resp.success == true) {
                     location.reload();
                 } else {
-                    resp.json({ success: false });
+                    this.setState({ error: true });
                 }
             })
             .catch((err) => {
@@ -51,6 +52,8 @@ export class Login extends Component {
     render() {
         return (
             <section>
+                <Link to="/">Register</Link>
+                <Link to="/login"> Log in</Link>
                 <h1>Login here</h1>
                 {this.state.error && <h2>Something went wrong in the Login</h2>}
                 <form className="form">

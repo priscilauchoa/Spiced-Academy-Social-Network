@@ -1,6 +1,11 @@
 body {
     color: blueviolet;
     background-color: rgb(199, 247, 243);
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form {
@@ -15,6 +20,7 @@ input::placeholder {
 
 input {
     width: 200px;
+
     border: none;
     background-color: transparent;
     border-bottom: 1px solid blueviolet;
@@ -44,4 +50,22 @@ button {
 
 .logout-button {
     width: 27px;
+}
+a:link {
+    color: #1ebba3;
+    margin: 0 5px;
+    font-size: 20px;
+}
+a:visited {
+    color: #ff00f4;
+}
+a:hover {
+    color: #a766ff;
+}
+a:active {
+    color: #ff9800;
+}
+
+.error-message {
+    color: rgb(240, 72, 72);
 }
