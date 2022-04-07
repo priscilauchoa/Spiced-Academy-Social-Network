@@ -57,8 +57,10 @@ export class ResetPassword extends Component {
             .then((resp) => {
                 console.log(resp);
                 if (resp.success == true) {
+                    console.log(resp.success);
                     this.setState({ step: 3 });
                 } else {
+                    console.log(resp.success);
                     this.setState({ step: 2 });
                     this.setState({ error: true });
                 }

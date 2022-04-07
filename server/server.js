@@ -113,8 +113,16 @@ app.post("/password/reset/verify", (req, res) => {
             for (let i = 0; i < rows.length; i++) {
                 if (rows[i].code == req.body.code) {
                     console.log("correct code");
-                    db.resetPassword(req.body.password);
-                    res.json({ success: true });
+                    hash(req.body.password)
+                        .then((hashedPassword) => {
+                            db.resetPassword(
+                                req.session.userId,
+                                hashedPassword
+                            );
+                        })
+                        .then(() => {
+                            res.json({ success: true });
+                        });
                 }
             }
             // console.log("no code found");
