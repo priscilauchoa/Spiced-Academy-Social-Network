@@ -70,6 +70,7 @@ export class Login extends Component {
                         onChange={this.handleChange}
                     ></input>
                     <button onClick={this.handleSubmit}>Register</button>
+                    <Link to="/reset">Forgot Password</Link>
                 </form>
             </section>
         );

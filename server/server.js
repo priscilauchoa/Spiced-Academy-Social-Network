@@ -5,13 +5,16 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const { compare, hash } = require("./bc");
 const { SESS_SECRET } = require("../secrets.json");
+const ses = require("./ses.js");
 
 const path = require("path");
 const db = require("./db");
-const {
-    // requireLoggedOutUser,
-    requireLoggedInUser,
-} = require("./middleware");
+const cryptoRandomString = require("crypto-random-string");
+
+// const {
+//     // requireLoggedOutUser,
+//     // requireLoggedInUser,
+// } = require("./middleware");
 
 app.use(
     cookieSession({
@@ -38,7 +41,7 @@ app.post("/register.json", (req, res) => {
                 res.json({ success: true });
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
                 res.json({ success: false });
             });
     });
@@ -50,29 +53,53 @@ app.get("/logout", (req, res) => {
 });
 
 app.post("/login.json", function (req, res) {
-    console.log("émail aqui", req.body.email);
     db.authenticateUser(req.body.email)
         .then(({ rows }) => {
-            console.log("rORWS BEFORE", rows);
+            // console.log("rORWS BEFORE", rows);
             compare(req.body.password, rows[0].password).then(() => {
-                console.log("rORWS after", rows);
+                // console.log("rORWS after", rows);
 
                 req.session.userId = rows[0].id;
                 res.json({ success: true });
             });
         })
         .catch((err) => {
-            console.log(err);
+            // console.log(err);
             res.json({ success: false });
         });
 });
 
 app.get("/user/id.json", function (req, res) {
-    console.log(req.session.userId);
-    console.log("session id-->", req.session.userId);
+    // console.log(req.session.userId);
+    // console.log("session id-->", req.session.userId);
     res.json({
         userId: req.session.userId,
     });
+});
+
+app.post("/password/reset/start", (req, res) => {
+    console.log("req.params", req.body.email);
+    db.authenticateUser(req.body.email)
+        .then(({ rows }) => {
+            console.log("Users-->", rows);
+            if (!rows.length) {
+                console.log("user does not exist");
+            } else {
+                const secretCode = cryptoRandomString({
+                    length: 6,
+                });
+                db.registerCode(req.body.email, secretCode).then(() => {
+                    ses.sendEmail(
+                        `Reset your password ${secretCode} `,
+                        "New password"
+                    );
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("error", err);
+            // res.json({ success: false });
+        });
 });
 
 app.get("*", function (req, res) {
