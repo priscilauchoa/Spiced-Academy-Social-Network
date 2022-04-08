@@ -9,6 +9,7 @@ const ses = require("./ses.js");
 
 const path = require("path");
 const db = require("./db");
+const { uploader } = require("./upload");
 const cryptoRandomString = require("crypto-random-string");
 
 // const {
@@ -40,7 +41,7 @@ app.post("/register.json", (req, res) => {
                 req.session.userId = rows[0].id;
                 res.json({ success: true });
             })
-            .catch((err) => {
+            .catch(() => {
                 // console.log(err);
                 res.json({ success: false });
             });
@@ -63,7 +64,7 @@ app.post("/login.json", function (req, res) {
                 res.json({ success: true });
             });
         })
-        .catch((err) => {
+        .catch(() => {
             // console.log(err);
             res.json({ success: false });
         });
@@ -127,6 +128,18 @@ app.post("/password/reset/verify", (req, res) => {
             }
             // console.log("no code found");
             // res.json({ success: false });
+        })
+        .catch((err) => {
+            console.log("error verify code secret", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/upload", uploader.single("file"), (req, res) => {
+    db.changeProfilePic(req.session.userId, req.file)
+        .then(({ rows }) => {
+            console.log("rows****", rows);
+            res.json(rows);
         })
         .catch((err) => {
             console.log("error verify code secret", err);

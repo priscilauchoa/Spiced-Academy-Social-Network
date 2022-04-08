@@ -1,7 +1,6 @@
 body {
     color: blueviolet;
-    background-color: rgb(199, 247, 243);
-    width: 80%;
+    background-color: rgba(199, 247, 243, 0.705);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -12,6 +11,7 @@ body {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    align-items: center;
 }
 
 input::placeholder {
@@ -31,7 +31,6 @@ input {
 }
 button {
     margin: 10px;
-    font-size: 16px;
     width: 100px;
     border-radius: 5px;
     font-weight: 200;
@@ -52,20 +51,107 @@ button {
     width: 27px;
 }
 a:link {
-    color: #1ebba3;
-    margin: 0 5px;
+    color: #7af5e2;
+    margin: 10px 16px;
     font-size: 20px;
 }
 a:visited {
-    color: #ff00f4;
+    color: #eb42e2;
 }
 a:hover {
     color: #a766ff;
 }
 a:active {
-    color: #ff9800;
+    color: #77dba1;
 }
 
 .error-message {
     color: rgb(240, 72, 72);
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+nav a {
+    margin: 0 10px;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+}
+
+main {
+    width: 65%;
+}
+
+.div-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.reg-log {
+    margin: 25px;
+}
+
+.form a {
+    font-size: 15px;
+}
+
+.modal {
+    position: fixed;
+    display: flex;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    color: white;
+    background-color: rgba(41, 18, 46, 0.733);
+    /* padding-top: 50px; */
+}
+
+.modal-content {
+    background-color: #76e6eeb9;
+    margin: 10% auto;
+    width: 501px;
+    border-radius: 5px;
+    height: 147px;
+    padding: 57px 20px;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+label {
+    font-size: 10px;
+}
+.inputfile + label {
+    font-size: 1em;
+    height: 35px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(
+        45deg,
+        transparent 3%,
+
+        #ba7fe2 5%
+    );
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 10%;
 }

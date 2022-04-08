@@ -75,60 +75,77 @@ export class ResetPassword extends Component {
         if (this.state.step == 1) {
             return (
                 <>
-                    {this.state.error && (
-                        <h2 className="error-message">
-                            Something went wrong , please try again
-                        </h2>
-                    )}
-                    <h3>Reset Password</h3>
-                    <p>
-                        Please enter the e-mail adress with which you registered
-                    </p>
-                    <form className="form">
-                        <input
-                            name="email"
-                            placeholder="E-mail"
-                            type="email"
-                            onChange={this.handleChange}
-                        ></input>
+                    <section className="div-form">
+                        {this.state.error && (
+                            <h2 className="error-message">
+                                Something went wrong , please try again
+                            </h2>
+                        )}
+                        <h3>
+                            Forgot your Password{" "}
+                            <img
+                                className="logout-button"
+                                src="https://cdn-icons-png.flaticon.com/512/6179/6179011.png"
+                            ></img>
+                        </h3>
 
-                        <button onClick={this.handleSubmitStart}>Submit</button>
-                    </form>
+                        <p>
+                            Please enter the e-mail adress with which you
+                            registered
+                        </p>
+                        <form className="form">
+                            <input
+                                name="email"
+                                placeholder="E-mail"
+                                type="email"
+                                onChange={this.handleChange}
+                            ></input>
+
+                            <button onClick={this.handleSubmitStart}>
+                                Submit
+                            </button>
+                        </form>
+                    </section>
                 </>
             );
         } else if (this.state.step == 2) {
             return (
                 <>
-                    {this.state.error && (
-                        <h2 className="error-message">
-                            Something went wrong in the code verification,
-                            please try again
-                        </h2>
-                    )}
-                    <h3>Reset Password</h3>
-                    <p>Please enter the code which you received by e-mail</p>
-                    <form className="form">
-                        <input
-                            name="code"
-                            placeholder="Code"
-                            type="text"
-                            onChange={this.handleChange}
-                        ></input>
+                    <section className="div-form">
+                        {this.state.error && (
+                            <h2 className="error-message">
+                                Something went wrong in the code verification,
+                                please try again
+                            </h2>
+                        )}
+                        <h3>Reset Password</h3>
                         <p>
                             Please enter the code which you received by e-mail
                         </p>
+                        <form className="form">
+                            <input
+                                name="code"
+                                placeholder="Code"
+                                type="text"
+                                onChange={this.handleChange}
+                            ></input>
+                            <p>
+                                Please enter the code which you received by
+                                e-mail
+                            </p>
 
-                        <input
-                            name="password"
-                            placeholder="New Password"
-                            type="password"
-                            onChange={this.handleChange}
-                        ></input>
+                            <input
+                                name="password"
+                                placeholder="New Password"
+                                type="password"
+                                onChange={this.handleChange}
+                            ></input>
 
-                        <button onClick={this.handleSubmitVerify}>
-                            Submit
-                        </button>
-                    </form>
+                            <button onClick={this.handleSubmitVerify}>
+                                Submit
+                            </button>
+                        </form>
+                    </section>
                 </>
             );
         } else if (this.state.step == 3) {

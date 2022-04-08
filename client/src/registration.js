@@ -50,12 +50,13 @@ export class Registration extends Component {
 
     render() {
         return (
-            <section>
-                <Link to="/">Register</Link>
-                <Link to="/login"> Log in</Link>
+            <section className="div-form">
                 <h1>Register here</h1>
                 {this.state.error && (
-                    <h2 className="error-message">Something went wrong in the registration, please try again</h2>
+                    <h2 className="error-message">
+                        Something went wrong in the registration, please try
+                        again
+                    </h2>
                 )}
                 <form className="form">
                     <input
@@ -82,6 +83,10 @@ export class Registration extends Component {
                         type="password"
                         onChange={this.handleChange}
                     ></input>
+                    <div className="reg-log">
+                        <Link to="/">Register</Link>
+                        <Link to="/login"> Log in</Link>
+                    </div>
                     <button onClick={this.handleSubmit}>Register</button>
                 </form>
             </section>

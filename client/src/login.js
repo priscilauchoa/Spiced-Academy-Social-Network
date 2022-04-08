@@ -51,9 +51,7 @@ export class Login extends Component {
 
     render() {
         return (
-            <section>
-                <Link to="/">Register</Link>
-                <Link to="/login"> Log in</Link>
+            <section className="div-form">
                 <h1>Login here</h1>
                 {this.state.error && <h2>Something went wrong in the Login</h2>}
                 <form className="form">
@@ -69,7 +67,11 @@ export class Login extends Component {
                         type="password"
                         onChange={this.handleChange}
                     ></input>
-                    <button onClick={this.handleSubmit}>Register</button>
+                    <div className="reg-log">
+                        <Link to="/">Register</Link>
+                        <Link to="/login"> Log in</Link>
+                    </div>
+                    <button onClick={this.handleSubmit}>Login</button>
                     <Link to="/reset">Forgot Password</Link>
                 </form>
             </section>

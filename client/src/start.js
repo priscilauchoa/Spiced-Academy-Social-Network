@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 import Logo from "./logo";
 import Logout from "./logout";
+import App from "./app";
 
 fetch("/user/id.json")
     .then((response) => response.json())
@@ -19,7 +20,7 @@ fetch("/user/id.json")
             ReactDOM.render(
                 <>
                     <Logout />
-                    <Logo />
+                    <App />
                 </>,
                 document.querySelector("main")
             );

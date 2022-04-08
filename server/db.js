@@ -15,6 +15,14 @@ exports.registerCode = (email, code) => {
         email,
     ]);
 };
+exports.changeProfilePic = (id, profilePic) => {
+    return db.query(
+        `UPDATE users
+SET profile_pic = $2
+WHERE users.id = $1 RETURNING profile_pic`,
+        [id, profilePic]
+    );
+};
 exports.getCode = () => {
     return db.query(
         `SELECT * FROM reset_codes

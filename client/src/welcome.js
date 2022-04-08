@@ -1,17 +1,17 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import { Registration } from "./registration";
-import Logo from "./logo";
 import { Login } from "./login";
 import { ResetPassword } from "./resetPassword";
+import Menu from "./menu";
 
 export default function Welcome() {
     return (
         <>
-            <Logo />
-            <h1>Welcome</h1>
-
             <BrowserRouter>
                 <div>
+                    <nav>
+                        <Menu />
+                    </nav>
                     <Route exact path="/">
                         <Registration />
                     </Route>
