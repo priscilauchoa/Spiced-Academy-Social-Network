@@ -8,6 +8,7 @@ export default class App extends Component {
         super(props);
         this.state = { isModalOpened: false };
         this.handleModalClose = this.handleModalClose.bind(this);
+        this.setBio = this.setBio.bind(this);
     }
 
     componentDidMount() {
@@ -18,6 +19,7 @@ export default class App extends Component {
                 this.setState({
                     first: rows[0].first,
                     last: rows[0].last,
+                    bio: rows[0].bio,
                     profilePic: rows[0].profile_pic,
                 });
                 this.setState({
@@ -27,7 +29,9 @@ export default class App extends Component {
     }
     // toogleModal(){}
 
-    setBio(newBio) {}
+    setBio(newBio) {
+        this.setState({ bio: newBio });
+    }
 
     handleProfilePictureChange = (img) => {
         console.log("image", img);
@@ -67,6 +71,8 @@ export default class App extends Component {
                         first={this.state.first}
                         last={this.state.last}
                         img={this.state.profilePic}
+                        bio={this.state.bio}
+                        setBio={this.setBio}
                     />
                     {this.state.isModalOpened && (
                         <Uploader

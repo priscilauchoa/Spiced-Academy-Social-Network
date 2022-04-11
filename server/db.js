@@ -55,7 +55,7 @@ exports.insertBio = (userId, bio) => {
     return db.query(
         `UPDATE users
 SET bio = $2
-WHERE users.id = $1 RETURNING bio;`,
+WHERE users.id = $1 RETURNING bio as draftBio;`,
         [userId, bio]
     );
 };

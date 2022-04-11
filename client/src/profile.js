@@ -2,7 +2,7 @@ import ProfilePic from "./profilePic";
 import BioEditor from "./bioEditor";
 
 export default function Profile(props) {
-    console.log("propss-->", props);
+    // console.log("propss-->", props);
     return (
         <div className="container">
             <ProfilePic styleCss="profile-pic" img={props.img} />{" "}
@@ -11,7 +11,7 @@ export default function Profile(props) {
                     {props.first} {props.last}
                 </h1>
 
-                <BioEditor />
+                <BioEditor bio={props.bio} setBio={props.setBio} />
             </div>
         </div>
     );

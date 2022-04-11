@@ -160,12 +160,20 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
-app.post("/bio", uploader.single("file"), s3.upload, (req, res) => {
-    db.insertBio(req.session.userId, req.body.bio)
+app.get("/bio", function (req, res) {
+    // console.log(req.session.userId);
+    console.log("session id-->", req.session.userId);
+    db.getUser(req.session.userId).then(({ rows }) => {
+        console.log(rows[0].bio);
+        res.json(rows[0]);
+    });
+});
+
+app.post("/bio", (req, res) => {
+    console.log("bio no server", req.body.draftBio);
+    db.insertBio(req.session.userId, req.body.draftBio)
         .then(({ rows }) => {
-            console.log("rows****", rows);
-            // res.json({ url });
-            res.json(rows[0]);
+            res.json({ rows });
         })
         .catch((err) => {
             console.log("error saving BIO", err);
