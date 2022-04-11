@@ -11,6 +11,7 @@ const path = require("path");
 const db = require("./db");
 const { uploader } = require("./upload");
 const cryptoRandomString = require("crypto-random-string");
+const s3 = require("./s3");
 
 // const {
 //     // requireLoggedOutUser,
@@ -78,6 +79,15 @@ app.get("/user/id.json", function (req, res) {
     });
 });
 
+app.get("/user", function (req, res) {
+    // console.log(req.session.userId);
+    console.log("session id-->", req.session.userId);
+    db.getUser(req.session.userId).then(({ rows }) => {
+        console.log(rows[0].profile_pic);
+        res.json({ rows });
+    });
+});
+
 app.post("/password/reset/start", (req, res) => {
     console.log("req.params", req.body.email);
     db.authenticateUser(req.body.email)
@@ -135,14 +145,30 @@ app.post("/password/reset/verify", (req, res) => {
         });
 });
 
-app.post("/upload", uploader.single("file"), (req, res) => {
-    db.changeProfilePic(req.session.userId, req.file)
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    let url = `https://s3.amazonaws.com/priscilasbucket/${req.file.filename}`;
+
+    db.changeProfilePic(req.session.userId, url)
         .then(({ rows }) => {
             console.log("rows****", rows);
-            res.json(rows);
+            // res.json({ url });
+            res.json(rows[0]);
         })
         .catch((err) => {
             console.log("error verify code secret", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/bio", uploader.single("file"), s3.upload, (req, res) => {
+    db.insertBio(req.session.userId, req.body.bio)
+        .then(({ rows }) => {
+            console.log("rows****", rows);
+            // res.json({ url });
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log("error saving BIO", err);
             res.json({ success: false });
         });
 });

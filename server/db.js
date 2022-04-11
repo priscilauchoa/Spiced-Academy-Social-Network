@@ -19,14 +19,22 @@ exports.changeProfilePic = (id, profilePic) => {
     return db.query(
         `UPDATE users
 SET profile_pic = $2
-WHERE users.id = $1 RETURNING profile_pic`,
+WHERE users.id = $1 RETURNING profile_pic AS url`,
         [id, profilePic]
     );
 };
+
 exports.getCode = () => {
     return db.query(
         `SELECT * FROM reset_codes
 WHERE CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes';`
+    );
+};
+exports.getUser = (id) => {
+    return db.query(
+        `SELECT * FROM users
+WHERE id = $1;`,
+        [id]
     );
 };
 
@@ -40,5 +48,14 @@ exports.resetPassword = (userId, newPassword) => {
 SET password = $2
 WHERE users.id = $1;`,
         [userId, newPassword]
+    );
+};
+
+exports.insertBio = (userId, bio) => {
+    return db.query(
+        `UPDATE users
+SET bio = $2
+WHERE users.id = $1 RETURNING bio;`,
+        [userId, bio]
     );
 };

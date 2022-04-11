@@ -10,7 +10,9 @@ export default class Uploader extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
+    handleClick(e) {
+        console.log("this prpos", this.props);
+        e.preventDefault();
         const file = this.state.file;
         // console.log("******", this.state.file);
         let fd = new FormData();
@@ -20,20 +22,31 @@ export default class Uploader extends Component {
             body: fd,
         })
             .then((res) => res.json())
-            .then(({ rows }) => {
-                console.log("response", rows);
+            .then(({ url }) => {
+                console.log("url", url);
+                this.props.onProfilePictureChange(url);
             })
             .catch((err) => {
                 console.log("err", err);
             });
     }
 
+    // closeModal() {
+    //     this.props.isModalOpened = false;
+    // }
+
     render() {
         return (
             <>
                 <section className="modal">
                     <section className="modal-content">
-                        <form className="form">
+                        <section className="form">
+                            <button
+                                className="close-button"
+                                onClick={this.props.onCloseModal}
+                            >
+                                X
+                            </button>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -43,7 +56,7 @@ export default class Uploader extends Component {
                                 }}
                             ></input>
                             <button onClick={this.handleClick}> Submit</button>
-                        </form>
+                        </section>
                     </section>
                 </section>
             </>

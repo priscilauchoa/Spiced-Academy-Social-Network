@@ -12,6 +12,7 @@ fetch("/user/id.json")
         if (!data.userId) {
             ReactDOM.render(
                 <>
+                    <Logo />
                     <Welcome />
                 </>,
                 document.querySelector("main")
@@ -20,6 +21,7 @@ fetch("/user/id.json")
             ReactDOM.render(
                 <>
                     <Logout />
+                    <Logo />
                     <App />
                 </>,
                 document.querySelector("main")
