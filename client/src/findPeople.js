@@ -7,7 +7,7 @@ export default function FindPeople() {
     const [searchTerm, setSearchTerm] = useState([]);
 
     useEffect(() => {
-        fetch(`/users`)
+        fetch("/users")
             .then((res) => res.json())
             .then(({ rows }) => {
                 setUsers(rows);
