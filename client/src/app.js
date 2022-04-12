@@ -2,6 +2,9 @@ import { Component } from "react";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
+import FindPeople from "./findPeople";
+import { Link } from "react-router-dom";
+// import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -53,9 +56,14 @@ export default class App extends Component {
                         src="https://cdn-icons-png.flaticon.com/512/2597/2597136.png"
                         alt="logo"
                     ></img> */}
+                    {/* <BrowserRouter>
+                        <Route to="/users">
+                            <FindPeople />
+                        </Route> */}
 
+                    {/* <Link to="/">Friends</Link>; */}
                     <ProfilePic
-                        styleCss="logo"
+                        styleCss="profile-pic-small"
                         props={(this.state.first, this.state.last)}
                         img={this.state.profilePic}
                         clickHandler={() => {
@@ -66,7 +74,6 @@ export default class App extends Component {
                             );
                         }}
                     />
-
                     <Profile
                         first={this.state.first}
                         last={this.state.last}
@@ -74,6 +81,8 @@ export default class App extends Component {
                         bio={this.state.bio}
                         setBio={this.setBio}
                     />
+                    <FindPeople />
+                    {/* </BrowserRouter> */}
                     {this.state.isModalOpened && (
                         <Uploader
                             onCloseModal={this.handleModalClose}

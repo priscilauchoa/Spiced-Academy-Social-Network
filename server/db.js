@@ -30,11 +30,27 @@ exports.getCode = () => {
 WHERE CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes';`
     );
 };
+
 exports.getUser = (id) => {
     return db.query(
         `SELECT * FROM users
 WHERE id = $1;`,
         [id]
+    );
+};
+
+exports.getUsers = () => {
+    return db.query(`SELECT * FROM users 
+            ORDER BY id DESC
+            LIMIT 3;`);
+};
+exports.getUsersBySearch = (search) => {
+    return db.query(
+        `
+      SELECT * FROM users
+        WHERE first ILIKE $1;
+  `,
+        [search + "%"]
     );
 };
 

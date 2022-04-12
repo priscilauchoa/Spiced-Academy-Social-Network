@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
+
 export class Login extends Component {
     constructor() {
         super();
@@ -78,3 +79,19 @@ export class Login extends Component {
         );
     }
 }
+
+// import { useEffect, useState } from "react";
+
+// //hooks always start with use
+
+// export default function Login() {
+//     const [name, setName] = useState();
+
+//     return (
+//         <section>
+//             <input onChange={(e) => setName(e.target.value)} name={} ></input>
+//             <input onChange={(e) => setName(e.target.value)} name={} ></input>
+//             <button>Login</button>
+//         </section>
+//     );
+// }

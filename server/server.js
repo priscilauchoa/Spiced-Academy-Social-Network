@@ -81,9 +81,9 @@ app.get("/user/id.json", function (req, res) {
 
 app.get("/user", function (req, res) {
     // console.log(req.session.userId);
-    console.log("session id-->", req.session.userId);
+    // console.log("session id-->", req.session.userId);
     db.getUser(req.session.userId).then(({ rows }) => {
-        console.log(rows[0].profile_pic);
+        // console.log(rows[0].profile_pic);
         res.json({ rows });
     });
 });
@@ -166,6 +166,21 @@ app.get("/bio", function (req, res) {
     db.getUser(req.session.userId).then(({ rows }) => {
         console.log(rows[0].bio);
         res.json(rows[0]);
+    });
+});
+
+app.get("/users", function (req, res) {
+    db.getUsers(req.params.search).then(({ rows }) => {
+        // console.log({ rows });
+        res.json({ rows });
+    });
+});
+
+app.get("/users/:search", function (req, res) {
+    console.log("req.params.search", req.params.search);
+    db.getUsersBySearch(req.params.search).then(({ rows }) => {
+        console.log({ rows });
+        res.json({ rows });
     });
 });
 

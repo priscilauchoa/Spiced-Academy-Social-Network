@@ -1,6 +1,6 @@
 body {
     color: blueviolet;
-    background-color: rgba(199, 247, 243, 0.705);
+    background-color: rgba(173, 248, 242, 0.541);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -49,6 +49,16 @@ button {
     border-radius: 50%;
 }
 
+.profile-pic-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: 20%;
+    top: 0;
+    margin: 20px;
+    position: absolute;
+}
+
 .logout-button {
     width: 27px;
 }
@@ -58,7 +68,7 @@ a:link {
     font-size: 20px;
 }
 a:visited {
-    color: #eb42e2;
+    color: #e678e0;
 }
 a:hover {
     color: #a766ff;
@@ -71,9 +81,9 @@ a:active {
     color: rgb(240, 72, 72);
 }
 
-nav {
+.nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 nav a {
@@ -83,10 +93,15 @@ nav a {
 h1 {
     display: flex;
     align-items: center;
+    font-size: 17px;
+}
+.edit {
+    color: rgb(18, 200, 206);
 }
 
 main {
-    width: 65%;
+    width: 59%;
+    margin: 20px;
 }
 
 .div-form {
@@ -98,6 +113,13 @@ main {
 
 .reg-log {
     margin: 25px;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(137, 43, 226, 0.548);
+    margin-bottom: 50px;
 }
 
 .form a {
@@ -162,6 +184,7 @@ label {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    border: 4px solid white;
 }
 
 .container {
@@ -176,4 +199,17 @@ label {
 
 .container h1 {
     margin: 0;
+}
+
+.users-list {
+    background-color: #9af0eb88;
+    padding: 10px;
+    list-style: none;
+
+}
+
+.users {
+    width: 120px;
+    border-radius: 50%;
+    height: 120px;
 }

@@ -3,6 +3,7 @@ import { Registration } from "./registration";
 import { Login } from "./login";
 import { ResetPassword } from "./resetPassword";
 import Menu from "./menu";
+import FindPeople from "./findPeople";
 
 export default function Welcome() {
     return (
@@ -15,6 +16,11 @@ export default function Welcome() {
                     <Route exact path="/">
                         <Registration />
                     </Route>
+
+                    <Route path="/users">
+                        <FindPeople />
+                    </Route>
+
                     <Route path="/login">
                         <Login />
                     </Route>

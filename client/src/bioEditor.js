@@ -49,7 +49,7 @@ export default class BioEditor extends Component {
         })
             .then((resp) => resp.json())
             .then(({ rows }) => {
-                console.log("draft Bio Here", rows[0].draftbio);
+                console.log("draft Bio Here****", rows[0].draftbio);
                 this.setState({
                     bio: rows[0].draftbio,
                     showTextArea: false,
@@ -68,8 +68,17 @@ export default class BioEditor extends Component {
             <div>
                 {!this.state.showTextArea && (
                     <div>
-                        <a onClick={this.handleBioClick}>Edit</a>
                         <p> {this.props.bio} </p>
+                        {this.props.bio && (
+                            <a className="edit" onClick={this.handleBioClick}>
+                                Edit 🖋
+                            </a>
+                        )}
+                        {!this.props.bio && (
+                            <a className="edit" onClick={this.handleBioClick}>
+                                Add +
+                            </a>
+                        )}
                     </div>
                 )}
                 {this.state.showTextArea && (
