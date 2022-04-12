@@ -32,19 +32,21 @@ export default function FindPeople() {
     }, [searchTerm]);
 
     return (
-        <section>
+        <section className="find-people">
             <h4>Find People</h4>
             <h5>Check out who just joined! </h5>
-            <input onChange={(e) => setSearchTerm(e.target.value)} />
+            <input
+                placeholder="Search 🔍"
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
             <ul>
                 {users.map((user, id) => (
                     <li className="users-list" key={id}>
+                        <img className="users" src={user.profile_pic}></img>
                         <p>
                             {user.first} {user.last}
                         </p>
-                        <img className="users" src={user.profile_pic}></img>
-                        <p></p>
                     </li>
                 ))}
             </ul>

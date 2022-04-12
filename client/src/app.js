@@ -3,6 +3,7 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import FindPeople from "./findPeople";
+import Menu from "./menu";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -46,11 +47,17 @@ export default class App extends Component {
         });
     }
 
+    handleProfilePictureClick = () => {
+        this.setState({ isModalOpened: true });
+        console.log("profilePic was click", this.state.isModalOpened);
+    };
+
     render() {
         if (!this.state.id) {
             return (
                 <>
                     <BrowserRouter>
+                        <Menu />
                         <Route exact path="/">
                             <Profile
                                 first={this.state.first}
@@ -58,25 +65,20 @@ export default class App extends Component {
                                 img={this.state.profilePic}
                                 bio={this.state.bio}
                                 setBio={this.setBio}
+                                clickHandler={this.handleProfilePictureClick}
                             />
                         </Route>
+                        {/* <p>{this.state.first}</p> */}
 
                         <ProfilePic
                             styleCss="profile-pic-small"
                             props={(this.state.first, this.state.last)}
                             img={this.state.profilePic}
-                            clickHandler={() => {
-                                this.setState({ isModalOpened: true });
-                                console.log(
-                                    "profilePic was click",
-                                    this.state.isModalOpened
-                                );
-                            }}
+                            clickHandler={this.handleProfilePictureClick}
                         />
                         <Route path="/friends">
                             <FindPeople />
                         </Route>
-
                         {this.state.isModalOpened && (
                             <Uploader
                                 onCloseModal={this.handleModalClose}

@@ -70,19 +70,25 @@ export default class BioEditor extends Component {
                     <div>
                         <p> {this.props.bio} </p>
                         {this.props.bio && (
-                            <a className="edit" onClick={this.handleBioClick}>
+                            <button
+                                className="edit"
+                                onClick={this.handleBioClick}
+                            >
                                 Edit 🖋
-                            </a>
+                            </button>
                         )}
                         {!this.props.bio && (
-                            <a className="edit" onClick={this.handleBioClick}>
+                            <button
+                                className="edit"
+                                onClick={this.handleBioClick}
+                            >
                                 Add +
-                            </a>
+                            </button>
                         )}
                     </div>
                 )}
                 {this.state.showTextArea && (
-                    <div>
+                    <div className="text-area">
                         <textarea
                             defaultValue={this.props.bio}
                             onChange={this.handleBioChange}

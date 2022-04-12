@@ -2,13 +2,13 @@ import ProfilePic from "./profilePic";
 import BioEditor from "./bioEditor";
 
 export default function Profile(props) {
-    // console.log("propss-->", props);
+    console.log("propss-->", props);
     return (
         <div className="container">
             <ProfilePic
                 styleCss="profile-pic"
                 img={props.img}
-                onClick={props.clickHandler}
+                clickHandler={props.clickHandler}
             />
             <div>
                 <h1>

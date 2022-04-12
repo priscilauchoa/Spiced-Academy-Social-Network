@@ -42,7 +42,7 @@ WHERE id = $1;`,
 exports.getUsers = () => {
     return db.query(`SELECT * FROM users 
             ORDER BY id DESC
-            LIMIT 3;`);
+            LIMIT 4;`);
 };
 exports.getUsersBySearch = (search) => {
     return db.query(

@@ -1,9 +1,14 @@
 body {
     color: blueviolet;
-    background-color: rgba(173, 248, 242, 0.541);
+    background-color: rgba(173, 248, 242, 0);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    font-family: "Comfortaa", cursive;
+    font-family: "Montserrat", sans-serif;
+    font-family: "Orbitron", sans-serif;
+    font-family: "Quicksand", sans-serif;
+    font-family: "Roboto", sans-serif;
     align-items: center;
 }
 
@@ -30,31 +35,39 @@ input {
     color: blueviolet;
 }
 button {
-    margin: 10px;
-    width: 100px;
-    border-radius: 5px;
-    font-weight: 200;
+    /* margin: 10px; */
+    /* width: 80px; */
+    /* height: 23px; */
+    border-radius: 3px;
+    /* font-weight: 200; */
     letter-spacing: 1px;
-    padding: 13px 20px 13px;
-    color: rgb(199, 247, 243);
-    outline: 0;
-    border: 2px solid rgb(149, 20, 175);
+    /* padding: 13px 20px 13px; */
+    color: rgb(246, 241, 250);
+    /* outline: 0; */
+    font-size: 10px;
+    border: 2px solid rgb(131, 14, 155);
     cursor: pointer;
     position: relative;
-    background-color: rgba(190, 58, 223, 0.945);
+    background-color: rgba(181, 27, 216, 0.945);
 }
 .logo {
-    width: 80px;
-    height: 80px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
+}
+
+textarea {
+    background: transparent;
+    margin: 10px 0;
+    border: 1px solid #888;
 }
 
 .profile-pic-small {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    right: 20%;
-    top: 0;
+    right: 237px;
+    top: 9px;
     margin: 20px;
     position: absolute;
 }
@@ -64,8 +77,8 @@ button {
 }
 a:link {
     color: #7af5e2;
-    margin: 10px 16px;
-    font-size: 20px;
+    margin: 10px;
+    font-size: 11px;
 }
 a:visited {
     color: #e678e0;
@@ -81,22 +94,25 @@ a:active {
     color: rgb(240, 72, 72);
 }
 
+nav {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+nav a {
+    margin: 0;
+    text-decoration: none;
+}
+
 .nav {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-nav a {
-    margin: 0 10px;
 }
 
 h1 {
     display: flex;
     align-items: center;
     font-size: 17px;
-}
-.edit {
-    color: rgb(18, 200, 206);
 }
 
 main {
@@ -118,8 +134,7 @@ main {
 .line {
     width: 100%;
     height: 1px;
-    background-color: rgba(137, 43, 226, 0.548);
-    margin-bottom: 50px;
+    background-color: rgba(137, 43, 226, 0.281);
 }
 
 .form a {
@@ -181,8 +196,8 @@ label {
 }
 
 .profile-pic {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     border: 4px solid white;
 }
@@ -191,6 +206,10 @@ label {
     display: flex;
     align-items: end;
     margin: 10px 0;
+    padding: 15px;
+    background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20201017/pngtree-low-poly-geometric-background-of-holographic-triangles-of-different-sizes-and-image_420725.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .container img {
@@ -199,17 +218,50 @@ label {
 
 .container h1 {
     margin: 0;
+    font-size: 20pt;
 }
 
+ul {
+    padding: 0;
+    width: 100%;
+}
+
+p {
+    font-size: 12px;
+}
 .users-list {
-    background-color: #9af0eb88;
+    display: flex;
+    background-color: #8de6f149;
     padding: 10px;
     list-style: none;
-
+    color: blueviolet;
 }
 
 .users {
-    width: 120px;
-    border-radius: 50%;
-    height: 120px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5%;
+    margin-right: 16px;
+}
+
+input::placeholder {
+    color: rgba(133, 106, 158, 0.651);
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+.text-area {
+    display: table-caption;
+}
+
+textarea {
+    color: rgb(137, 105, 226);
+}
+
+.find-people {
+    background-color: #ecdbf521;
+    border-radius: 3px;
+    padding: 20px;
 }

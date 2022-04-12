@@ -4,8 +4,8 @@ export default function Menu() {
         <>
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="/">Register</Link>
-                <Link to="/login">Login</Link>
+                <Link to="/">Profile</Link>
+                <Link to="/friends">Friends</Link>  
             </nav>
         </>
     );
