@@ -39,19 +39,16 @@ WHERE id = $1;`,
     );
 };
 
-exports.getUsers = () => {
-    return db.query(`SELECT * FROM users 
-            ORDER BY id DESC
-            LIMIT 4;`);
-};
-exports.getUsersBySearch = (search) => {
-    return db.query(
-        `
-      SELECT * FROM users
-        WHERE first ILIKE $1;
-  `,
-        [search + "%"]
-    );
+exports.getUsers = (id, search) => {
+    let queryUser = "SELECT * FROM users WHERE id <> $1";
+    let paramsUser = [id];
+    if (search) {
+        queryUser += " AND first ILIKE $2";
+        paramsUser.push(search + "%");
+    } else {
+        queryUser += " LIMIT 4";
+    }
+    return db.query(queryUser, paramsUser);
 };
 
 exports.authenticateUser = (email) => {

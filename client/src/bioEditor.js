@@ -10,23 +10,6 @@ export default class BioEditor extends Component {
         this.handleBioClick = this.handleBioClick.bind(this);
     }
 
-    // componentDidMount() {
-    //     fetch("/bio")
-    //         .then((res) => res.json())
-    //         .then(({ rows }) => {
-    //             console.log("data user", rows[0].bio);
-    //             this.setState({
-    //                 bio: rows[0].bio,
-    //                 draftBio: rows[0].bio,
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             // this.setState(this.state.error);
-    //             this.setState({ error: true });
-    //         });
-    // }
-
     handleBioChange(e) {
         this.setState({ draftBio: e.target.value });
     }
@@ -39,6 +22,7 @@ export default class BioEditor extends Component {
         console.log("this.state.draftBio***", this.state);
         // this.setState({ draftBio: e.target.value });
         this.props.setBio(this.state.draftBio);
+     
 
         fetch("/bio", {
             method: "POST",
@@ -71,6 +55,7 @@ export default class BioEditor extends Component {
                         <p> {this.props.bio} </p>
                         {this.props.bio && (
                             <button
+                                id="edit"
                                 className="edit"
                                 onClick={this.handleBioClick}
                             >
@@ -79,10 +64,11 @@ export default class BioEditor extends Component {
                         )}
                         {!this.props.bio && (
                             <button
+                                id="add"
                                 className="edit"
                                 onClick={this.handleBioClick}
                             >
-                                Add +
+                                Add
                             </button>
                         )}
                     </div>

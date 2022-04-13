@@ -1,22 +1,14 @@
-import ProfilePic from "./profilePic";
 import BioEditor from "./bioEditor";
+import ProfileHeader from "./profileHeader";
 
 export default function Profile(props) {
-    console.log("propss-->", props);
+    const bioContent = <BioEditor bio={props.bio} setBio={props.setBio} />;
     return (
-        <div className="container">
-            <ProfilePic
-                styleCss="profile-pic"
-                img={props.img}
-                clickHandler={props.clickHandler}
-            />
-            <div>
-                <h1>
-                    {props.first} {props.last}
-                </h1>
-
-                <BioEditor bio={props.bio} setBio={props.setBio} />
-            </div>
-        </div>
+        <ProfileHeader
+            profilePic={props.img}
+            firstName={props.first}
+            lastName={props.last}
+            bioContent={bioContent}
+        />
     );
 }

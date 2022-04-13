@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import ProfileHeader from "./profileHeader";
 
 export default function OtherProfile() {
     const [user, setUser] = useState({});
@@ -19,23 +20,13 @@ export default function OtherProfile() {
                 }
             });
     }, []);
-
+    const bioContent = <p>{user.bio}</p>;
     return (
-        <div className="container">
-            <img
-                className="profile-pic"
-                styleCss="profile-pic"
-                src={
-                    user.profile_pic ||
-                    "https://icons.iconarchive.com/icons/alecive/flatwoken/256/Apps-User-icon.png"
-                }
-            />
-            <div>
-                <h1>
-                    {user.first} {user.last}
-                </h1>
-                <p> here{user.bio}</p>
-            </div>
-        </div>
+        <ProfileHeader
+            profilePic={user.profile_pic}
+            firstName={user.first}
+            lastName={user.last}
+            bioContent={bioContent}
+        />
     );
 }

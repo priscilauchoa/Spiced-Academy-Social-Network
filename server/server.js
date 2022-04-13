@@ -185,7 +185,7 @@ app.get("/bio", function (req, res) {
 });
 
 app.get("/users", function (req, res) {
-    db.getUsers(req.params.search).then(({ rows }) => {
+    db.getUsers(req.session.userId).then(({ rows }) => {
         // console.log({ rows });
         res.json({ rows });
     });
@@ -193,7 +193,7 @@ app.get("/users", function (req, res) {
 
 app.get("/users/:search", function (req, res) {
     console.log("req.params.search", req.params.search);
-    db.getUsersBySearch(req.params.search).then(({ rows }) => {
+    db.getUsers(req.session.userId, req.params.search).then(({ rows }) => {
         console.log({ rows });
         res.json({ rows });
     });
