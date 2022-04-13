@@ -88,6 +88,21 @@ app.get("/user", function (req, res) {
     });
 });
 
+app.get("/api/user/:id", function (req, res) {
+    if (req.session.userId == req.params.id) {
+        res.json({ sucess: false });
+    } else {
+        db.getUser(req.params.id).then(({ rows }) => {
+            if (rows[0]) {
+                console.log(rows[0]);
+                res.json({ rows, sucess: true });
+            } else {
+                res.json({ sucess: false });
+            }
+        });
+    }
+});
+
 app.post("/password/reset/start", (req, res) => {
     console.log("req.params", req.body.email);
     db.authenticateUser(req.body.email)

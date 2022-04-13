@@ -4,8 +4,8 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import FindPeople from "./findPeople";
 import Menu from "./menu";
-// import OtherProfile from "./otherProfile";
-import { Link } from "react-router-dom";
+import OtherProfile from "./otherProfile";
+// import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends Component {
@@ -58,7 +58,6 @@ export default class App extends Component {
             return (
                 <>
                     <BrowserRouter>
-                        <h1>Loading</h1>
                         <Menu />
 
                         <Route exact path="/">
@@ -82,9 +81,9 @@ export default class App extends Component {
                         <Route path="/friends">
                             <FindPeople />
                         </Route>
-                        {/* <Route exact path="/user/:id">
+                        <Route exact path="/user/:id">
                             <OtherProfile />
-                        </Route> */}
+                        </Route>
                         {this.state.isModalOpened && (
                             <Uploader
                                 onCloseModal={this.handleModalClose}

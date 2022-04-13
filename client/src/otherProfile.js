@@ -1,20 +1,41 @@
-// // import { userState, useEffect } from "react";
-// import { ProfilePic } from "./profilePic";
-// import { BioEditor } from "./bioEditor";
+import { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
-// export default function OtherProfile(   ) {
-//     return (
-//         <div className="container">
-//             <ProfilePic
-//                 styleCss="profile-pic"
-//                 // img={props.img}
-//                 // clickHandler={props.clickHandler}
-//             />
-//             {/* <div> */}
-//             <h1>{/* {props.first} {props.last} */}</h1>
-//             <BioEditor />
-//             {/* bio={props.bio} setBio={props.setBio} > */}
-//             {/* </div> */}
-//         </div>
-//     );
-// }
+export default function OtherProfile() {
+    const [user, setUser] = useState({});
+    const params = useParams();
+    const history = useHistory();
+
+    useEffect(() => {
+        fetch(`/api/user/${params.id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("data", data);
+                if (!data.sucess) {
+                    history.push("/");
+                } else {
+                    setUser(data.rows[0]);
+                    console.log(user);
+                }
+            });
+    }, []);
+
+    return (
+        <div className="container">
+            <img
+                className="profile-pic"
+                styleCss="profile-pic"
+                src={
+                    user.profile_pic ||
+                    "https://icons.iconarchive.com/icons/alecive/flatwoken/256/Apps-User-icon.png"
+                }
+            />
+            <div>
+                <h1>
+                    {user.first} {user.last}
+                </h1>
+                <p> here{user.bio}</p>
+            </div>
+        </div>
+    );
+}

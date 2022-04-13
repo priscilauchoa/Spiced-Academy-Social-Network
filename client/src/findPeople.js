@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-
+import { useParams, useHistory } from "react-router-dom";
 //hooks always start with use
 
 export default function FindPeople() {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         fetch("/users")
@@ -31,6 +32,12 @@ export default function FindPeople() {
         return () => (abort = true);
     }, [searchTerm]);
 
+    const handleClick = (e) => {
+        const id = e.target.id;
+        history.push(`user/${id}`);
+        console.log();
+    };
+
     return (
         <section className="find-people">
             <h4>Find People</h4>
@@ -41,9 +48,14 @@ export default function FindPeople() {
             />
 
             <ul>
-                {users.map((user, id) => (
-                    <li className="users-list" key={id}>
-                        <img className="users" src={user.profile_pic}></img>
+                {users.map((user) => (
+                    <li className="users-list" key={user.id}>
+                        <img
+                            id={user.id}
+                            className="users"
+                            src={user.profile_pic}
+                            onClick={handleClick}
+                        ></img>
                         <p>
                             {user.first} {user.last}
                         </p>
