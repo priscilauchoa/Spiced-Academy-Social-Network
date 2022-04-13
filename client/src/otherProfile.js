@@ -1,0 +1,20 @@
+// // import { userState, useEffect } from "react";
+// import { ProfilePic } from "./profilePic";
+// import { BioEditor } from "./bioEditor";
+
+// export default function OtherProfile(   ) {
+//     return (
+//         <div className="container">
+//             <ProfilePic
+//                 styleCss="profile-pic"
+//                 // img={props.img}
+//                 // clickHandler={props.clickHandler}
+//             />
+//             {/* <div> */}
+//             <h1>{/* {props.first} {props.last} */}</h1>
+//             <BioEditor />
+//             {/* bio={props.bio} setBio={props.setBio} > */}
+//             {/* </div> */}
+//         </div>
+//     );
+// }
