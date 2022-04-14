@@ -40,13 +40,15 @@ export default class Uploader extends Component {
             <>
                 <section className="modal">
                     <section className="modal-content">
-                        <section className="form">
+                        <div className="close-button">
                             <button
                                 className="close-button"
                                 onClick={this.props.onCloseModal}
                             >
                                 X
                             </button>
+                        </div>
+                        <section className="form modal-form">
                             <input
                                 type="file"
                                 accept="image/*"
@@ -55,7 +57,19 @@ export default class Uploader extends Component {
                                     this.setState({ file: e.target.files[0] });
                                 }}
                             ></input>
-                            <button onClick={this.handleClick}> Submit</button>
+
+                            <div className="close-button">
+                                <button onClick={this.handleClick}>
+                                    {" "}
+                                    Submit
+                                </button>
+                                <button
+                                    className="close-button"
+                                    onClick={this.props.onCloseModal}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </section>
                     </section>
                 </section>

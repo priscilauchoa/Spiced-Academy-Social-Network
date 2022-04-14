@@ -5,7 +5,6 @@ import Profile from "./profile";
 import FindPeople from "./findPeople";
 import Menu from "./menu";
 import OtherProfile from "./otherProfile";
-// import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends Component {

@@ -9,6 +9,7 @@ export default function Profile(props) {
             firstName={props.first}
             lastName={props.last}
             bioContent={bioContent}
+            clickHandler={props.clickHandler}
         />
     );
 }

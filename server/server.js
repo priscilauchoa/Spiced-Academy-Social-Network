@@ -211,6 +211,34 @@ app.post("/bio", (req, res) => {
         });
 });
 
+app.post("/friendship-status", function (req, res) {
+    console.log("***", req.session.userId, req.body.otherUser);
+    db.insertFriendship(req.session.userId, req.body.otherUser).then(
+        ({ rows }) => {
+            if (rows[0]) {
+                console.log(rows[0]);
+                res.json({ success: true });
+            } else {
+                res.json({ success: false });
+            }
+        }
+    );
+});
+
+app.get("/friendship/:otherUser", function (req, res) {
+    console.log(
+        "req.session.userId, req.params.otherUser",
+        req.session.userId,
+        req.params.otherUser
+    );
+    db.getFriendship(req.session.userId, req.params.otherUser).then(
+        ({ rows }) => {
+            console.log("friendship", rows);
+            res.json({ rows });
+        }
+    );
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
