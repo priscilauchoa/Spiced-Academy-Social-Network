@@ -75,7 +75,7 @@ WHERE users.id = $1 RETURNING bio as draftBio;`,
 
 exports.insertFriendship = (userId, otherUserId) => {
     return db.query(
-        `INSERT INTO friendship (sender_id, recepient_id, user_id) VALUES ($1, $2, $1) RETURNING recepient_id`,
+        `INSERT INTO friendship (sender_id, recepient_id, user_id) VALUES ($1, $2, $1) RETURNING sender_id, recepient_id, accepted`,
         [userId, otherUserId]
     );
 };
@@ -83,8 +83,25 @@ exports.insertFriendship = (userId, otherUserId) => {
 exports.getFriendship = (currentUserId, otherUserId) => {
     return db.query(
         `SELECT * FROM friendship
-   WHERE (recepient_id = $1 AND sender_id = $2)
-   OR (recepient_id = $2 AND sender_id = $1)`,
+         WHERE (recepient_id = $1 AND sender_id = $2)
+         OR (recepient_id = $2 AND sender_id = $1)`,
         [currentUserId, otherUserId]
+    );
+};
+
+exports.acceptFriendshipRequest = (userId, otherUserId) => {
+    return db.query(
+        `UPDATE friendship
+        SET accepted = true
+        WHERE recepient_id = $1 AND sender_id = $2 RETURNING sender_id, recepient_id, accepted`,
+        [userId, otherUserId]
+    );
+};
+
+exports.removeFriendship = (userId, otherUserId) => {
+    return db.query(
+        `DELETE FROM friendship
+        WHERE (recepient_id = $2 AND sender_id = $1) OR (recepient_id = $1 AND sender_id = $2)`,
+        [userId, otherUserId]
     );
 };

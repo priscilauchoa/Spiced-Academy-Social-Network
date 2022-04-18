@@ -7,6 +7,7 @@ export default function OtherProfile() {
     const [user, setUser] = useState({});
     const params = useParams();
     const history = useHistory();
+    // console.log("params ****", params);
 
     useEffect(() => {
         fetch(`/api/user/${params.id}`)
@@ -17,10 +18,12 @@ export default function OtherProfile() {
                     history.push("/");
                 } else {
                     setUser(data.rows[0]);
-                    console.log(user);
+                    console.log("user", user);
                 }
             });
     }, []);
+
+    const hasUserId = user.id !== undefined;
     const bioContent = <p>{user.bio}</p>;
     return (
         <>
@@ -30,7 +33,7 @@ export default function OtherProfile() {
                 lastName={user.last}
                 bioContent={bioContent}
             />
-            <FriendButton otherUserId={user.id} />
+            {hasUserId && <FriendButton otherUserId={user.id} />}
         </>
     );
 }

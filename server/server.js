@@ -118,7 +118,7 @@ app.post("/password/reset/start", (req, res) => {
                     .then(() => {
                         ses.sendEmail(
                             `Reset your password ${secretCode} `,
-                            "New password"
+                            "New password Priscila Flores"
                         );
                     })
                     .then(() => res.json({ success: true }));
@@ -213,28 +213,75 @@ app.post("/bio", (req, res) => {
 
 app.post("/friendship-status", function (req, res) {
     console.log("***", req.session.userId, req.body.otherUser);
-    db.insertFriendship(req.session.userId, req.body.otherUser).then(
-        ({ rows }) => {
-            if (rows[0]) {
+    const { otherUserId, action } = req.body;
+    const { userId } = req.session;
+    const status = action === "accept" ? true : false;
+    let dbFunc = db.acceptFriendshipRequest;
+    if (action === "request") {
+        dbFunc = db.insertFriendship;
+    } else if (action === "cancel" || action === "unfriend") {
+        dbFunc = db.removeFriendship;
+    }
+    dbFunc(userId, otherUserId, status)
+        .then(({ rows }) => {
+            if (rows.length && rows[0]) {
                 console.log(rows[0]);
-                res.json({ success: true });
+                res.json(rows[0]);
             } else {
-                res.json({ success: false });
+                throw new Error("No rows updated");
             }
-        }
-    );
+        })
+        .catch(() => {
+            res.json({ success: false }).status(500);
+        });
 });
+// app.post("/friendship-status/accept", function (req, res) {
+//     console.log("***", req.session.userId, req.body.otherUser, req.body);
+//     let status = false;
+//     if (req.body.action == "accept-request") {
+//         status = true;
+//     } else {
+//         status = false;
+//     }
+//     db.updateStatus(req.session.userId, req.body.otherUser, status).then(
+//         ({ rows }) => {
+//             if (rows[0].accepted) {
+//                 console.log("rows", rows[0]);
+//                 res.json({ success: true });
+//             } else {
+//                 res.json({ success: false });
+//             }
+//         }
+//     );
+// });
 
-app.get("/friendship/:otherUser", function (req, res) {
+app.get("/friendship/:otherUserId", function (req, res) {
     console.log(
-        "req.session.userId, req.params.otherUser",
+        "req.session.userId, req.params.otherUserId",
         req.session.userId,
-        req.params.otherUser
+        req.params.otherUserId
     );
-    db.getFriendship(req.session.userId, req.params.otherUser).then(
+    db.getFriendship(req.session.userId, req.params.otherUserId).then(
         ({ rows }) => {
             console.log("friendship", rows);
-            res.json({ rows });
+
+            const response = rows.map((row) => {
+                let action;
+                if (row.accepted) {
+                    action = "unfriend";
+                } else {
+                    action =
+                        row.sender_id === req.session.userId
+                            ? "cancel"
+                            : "accept";
+                }
+
+                return {
+                    ...row,
+                    action,
+                };
+            });
+            res.json({ rows: response });
         }
     );
 });

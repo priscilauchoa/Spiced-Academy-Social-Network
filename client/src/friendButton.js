@@ -1,24 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export default function FriendButton(props) {
     const [buttonText, setButtonText] = useState([]);
-    const otherUser = props.otherUserId;
-    console.log("user**", otherUser);
+    const [action, setAction] = useState();
+    const otherUserId = props.otherUserId;
+    const [buttonStyle, setButtonStyle] = useState();
+    console.log("user**", props.otherUserId);
 
     // console.log(props);
-
     useEffect(() => {
-        fetch(`/friendship/${otherUser}`)
+        if (action === "request") {
+            setButtonText("Add +");
+            setButtonStyle("");
+        } else if (action === "cancel") {
+            setButtonText("Cancel request");
+            setButtonStyle("cancel-request");
+        } else if (action === "accept") {
+            setButtonText("Accept request");
+            setButtonStyle("accept-request");
+        } else if (action === "unfriend") {
+            setButtonText("Unfriend");
+            setButtonStyle("cancel-request");
+        }
+    }, [action]);
+
+    const fetchFriendship = useCallback(() => {
+        fetch(`/friendship/${otherUserId}`)
             .then((res) => res.json())
             .then(({ rows }) => {
                 console.log("rows from friendship", rows);
                 if (rows.length == 0) {
-                    setButtonText("Add +");
-                }
-                if (rows[0].accept == false) {
-                    setButtonText("Cancel request");
+                    setAction("request");
                 } else {
-                    setButtonText("Cancel request");
+                    setAction(rows[0].action);
                 }
             })
             .catch((err) => {
@@ -26,31 +40,33 @@ export default function FriendButton(props) {
             });
     }, []);
 
-    const handleClick = () => {
-        if (buttonText == "Add +") {
-            fetch("/friendship-status", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    otherUser,
-                }),
-            })
-                .then((res) => res.json())
-                .then(({ success }) => {
-                    console.log("success", success);
-                    if (success) {
-                        setButtonText("Cancel request");
-                        // } else {
-                        //     setButtonText("Add +");
-                    }
-                })
-                .catch((err) => {
-                    console.log("err", err);
-                });
-        }
-    };
+    useEffect(() => {
+        fetchFriendship();
+    }, [fetchFriendship]);
 
-    return <button onClick={handleClick}>{buttonText}</button>;
+    const handleClick = () => {
+        fetch("/friendship-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                otherUserId,
+                action,
+            }),
+        })
+            .then((res) => res.json())
+            .then(({ success }) => {
+                fetchFriendship();
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+        };
+
+    return action ? (
+        <button className={buttonStyle} onClick={handleClick}>
+            {buttonText}
+        </button>
+    ) : null;
 }

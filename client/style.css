@@ -252,6 +252,14 @@ p {
     color: blueviolet;
 }
 
+.cancel-request {
+    background-color: lightcoral;
+}
+
+.accept-request{
+    background-color: rgb(49, 187, 150);
+}
+
 .users {
     width: 100px;
     height: 100px;
