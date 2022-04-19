@@ -1,6 +1,6 @@
 module.exports.requireLoggedOutUser = (req, res, next) => {
     if (req.session.userId) {
-        return res.redirect("/petition");
+        return res.redirect("/");
     }
 
     next();

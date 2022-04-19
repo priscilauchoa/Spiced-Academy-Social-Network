@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-
 export class Login extends Component {
     constructor() {
         super();
@@ -19,7 +18,6 @@ export class Login extends Component {
     handleChange(evt) {
         // console.log("input fields-->", evt.target.name);
         // console.log("What my user is typing-->", evt.target.value);
-        //??? [evt.target.name]: evt.target.value
         this.setState({ [evt.target.name]: evt.target.value });
         console.log("submit was clicked", this.state);
     }
@@ -36,7 +34,7 @@ export class Login extends Component {
             .then((resp) => resp.json())
             .then((resp) => {
                 if (resp.success == true) {
-                    location.reload();
+                    location.replace("/");
                 } else {
                     this.setState({ error: true });
                 }
@@ -68,11 +66,11 @@ export class Login extends Component {
                         type="password"
                         onChange={this.handleChange}
                     ></input>
+                    <button className="btn-submit" onClick={this.handleSubmit}>Login</button>
                     <div className="reg-log">
                         <Link to="/">Register</Link>
                         <Link to="/login"> Log in</Link>
                     </div>
-                    <button onClick={this.handleSubmit}>Login</button>
                     <Link to="/reset">Forgot Password</Link>
                 </form>
             </section>

@@ -35,7 +35,6 @@ export default function FindPeople() {
     const handleClick = (e) => {
         const id = e.target.id;
         history.push(`user/${id}`);
-        console.log();
     };
 
     return (

@@ -83,11 +83,13 @@ export class Registration extends Component {
                         type="password"
                         onChange={this.handleChange}
                     ></input>
+                    <button className="btn-submit" onClick={this.handleSubmit}>
+                        Register
+                    </button>
                     <div className="reg-log">
                         <Link to="/">Register</Link>
                         <Link to="/login"> Log in</Link>
                     </div>
-                    <button onClick={this.handleSubmit}>Register</button>
                 </form>
             </section>
         );

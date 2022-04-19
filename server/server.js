@@ -216,6 +216,7 @@ app.post("/friendship-status", function (req, res) {
     const { otherUserId, action } = req.body;
     const { userId } = req.session;
     const status = action === "accept" ? true : false;
+
     let dbFunc = db.acceptFriendshipRequest;
     if (action === "request") {
         dbFunc = db.insertFriendship;
@@ -235,25 +236,6 @@ app.post("/friendship-status", function (req, res) {
             res.json({ success: false }).status(500);
         });
 });
-// app.post("/friendship-status/accept", function (req, res) {
-//     console.log("***", req.session.userId, req.body.otherUser, req.body);
-//     let status = false;
-//     if (req.body.action == "accept-request") {
-//         status = true;
-//     } else {
-//         status = false;
-//     }
-//     db.updateStatus(req.session.userId, req.body.otherUser, status).then(
-//         ({ rows }) => {
-//             if (rows[0].accepted) {
-//                 console.log("rows", rows[0]);
-//                 res.json({ success: true });
-//             } else {
-//                 res.json({ success: false });
-//             }
-//         }
-//     );
-// });
 
 app.get("/friendship/:otherUserId", function (req, res) {
     console.log(

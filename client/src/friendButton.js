@@ -62,7 +62,7 @@ export default function FriendButton(props) {
             .catch((err) => {
                 console.log("err", err);
             });
-        };
+    };
 
     return action ? (
         <button className={buttonStyle} onClick={handleClick}>

@@ -6,6 +6,7 @@ import FindPeople from "./findPeople";
 import Menu from "./menu";
 import OtherProfile from "./otherProfile";
 import { BrowserRouter, Route } from "react-router-dom";
+import Logo from "./logo";
 
 export default class App extends Component {
     constructor(props) {
@@ -57,8 +58,9 @@ export default class App extends Component {
             return (
                 <>
                     <BrowserRouter>
-                        <Menu />
+                        <Logo />
 
+                        <Menu />
                         <Route exact path="/">
                             <Profile
                                 first={this.state.first}
@@ -70,7 +72,6 @@ export default class App extends Component {
                             />
                         </Route>
                         {/* <p>{this.state.first}</p> */}
-
                         <ProfilePic
                             styleCss="profile-pic-small"
                             props={(this.state.first, this.state.last)}

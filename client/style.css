@@ -256,7 +256,7 @@ p {
     background-color: lightcoral;
 }
 
-.accept-request{
+.accept-request {
     background-color: rgb(49, 187, 150);
 }
 
@@ -287,4 +287,8 @@ textarea {
     background-color: #ecdbf521;
     border-radius: 3px;
     padding: 20px;
+}
+
+.btn-submit {
+    margin-top: 20px;
 }
