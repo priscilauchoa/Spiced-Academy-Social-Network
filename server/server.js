@@ -138,7 +138,7 @@ app.post("/password/reset/verify", (req, res) => {
 
             for (let i = 0; i < rows.length; i++) {
                 if (rows[i].code == req.body.code) {
-                    console.log("correct code");
+                    // console.log("correct code");
                     hash(req.body.password)
                         .then((hashedPassword) => {
                             db.resetPassword(
@@ -155,7 +155,7 @@ app.post("/password/reset/verify", (req, res) => {
             // res.json({ success: false });
         })
         .catch((err) => {
-            console.log("error verify code secret", err);
+            // console.log("error verify code secret", err);
             res.json({ success: false });
         });
 });
@@ -165,7 +165,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
     db.changeProfilePic(req.session.userId, url)
         .then(({ rows }) => {
-            console.log("rows****", rows);
+            // console.log("rows****", rows);
             // res.json({ url });
             res.json(rows[0]);
         })
@@ -179,7 +179,7 @@ app.get("/bio", function (req, res) {
     // console.log(req.session.userId);
     console.log("session id-->", req.session.userId);
     db.getUser(req.session.userId).then(({ rows }) => {
-        console.log(rows[0].bio);
+        // console.log(rows[0].bio);
         res.json(rows[0]);
     });
 });
@@ -191,10 +191,33 @@ app.get("/users", function (req, res) {
     });
 });
 
+app.get("/friendsandwannabee", function (req, res) {
+    db.getFriendsAndWannaBees(req.session.userId).then(({ rows }) => {
+        console.log("friends and wanna be", rows);
+        res.json({ rows });
+    });
+});
+
+app.post("/friendsandwannabee", function (req, res) {
+    db.acceptFriendshipRequest(req.session.userId, req.body.id).then(
+        ({ rows }) => {
+            console.log("friends and wanna be", rows);
+            res.json({ success: true }).status(200);
+        }
+    );
+});
+app.post("/friendsandwannabee/unfriend", function (req, res) {
+    // console.log("id unfriend--->", req.session.userId, req.body.id);
+    db.removeFriendship(req.session.userId, req.body.id).then(({ rows }) => {
+        console.log("friends and wanna be", rows);
+        res.json({ success: true }).status(200);
+    });
+});
+
 app.get("/users/:search", function (req, res) {
     console.log("req.params.search", req.params.search);
     db.getUsers(req.session.userId, req.params.search).then(({ rows }) => {
-        console.log({ rows });
+        // console.log({ rows });
         res.json({ rows });
     });
 });

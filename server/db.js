@@ -105,3 +105,15 @@ exports.removeFriendship = (userId, otherUserId) => {
         [userId, otherUserId]
     );
 };
+
+exports.getFriendsAndWannaBees = (userId) => {
+    return db.query(
+        `SELECT users.id, first, last, profile_pic, accepted
+  FROM friendship
+  JOIN users
+  ON (accepted = false AND recepient_id = $1 AND sender_id = users.id)
+  OR (accepted = true AND recepient_id = $1 AND sender_id = users.id)
+  OR (accepted = true AND sender_id = $1 AND recepient_id = users.id)`,
+        [userId]
+    );
+};

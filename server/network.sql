@@ -21,10 +21,3 @@ code        VARCHAR NOT NULL,
 timestamp   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE friendship(
-id          SERIAL PRIMARY KEY,
-sender_id   INT,
-recepient_id INT,
-accepted BOOLEAN,
-user_id INT NOT NULL REFERENCES users(id)
-);
