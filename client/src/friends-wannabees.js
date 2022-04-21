@@ -18,22 +18,9 @@ export default function FriendAndWannaBees() {
 
     // console.log("wannabees --->", wannabees);
 
-    useEffect(() => {
-        //step 1 get request to get friends and wanna bees
-        fetch("/friendsandwannabee")
-            .then((res) => res.json())
-            .then(({ rows }) => {
-                // console.log("rows from friendsandwannabees", rows);
-                //step 2 call dispatch and pass the data it an action to add the data to redux
-                dispatch(receiveFriendsAndWannaBees(rows));
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    }, []);
+    useEffect(() => dispatch(receiveFriendsAndWannaBees()), []);
 
     const handleClickMakeFriend = (id) => {
-        console.log("accept was clicker", id);
         fetch("/friendsandwannabee", {
             method: "POST",
             headers: {
@@ -52,7 +39,6 @@ export default function FriendAndWannaBees() {
             });
     };
     const handleClickUnfriend = (id) => {
-        console.log("accept was clicker", id);
         fetch("/friendsandwannabee/unfriend", {
             method: "POST",
             headers: {
