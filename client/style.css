@@ -106,6 +106,7 @@ nav a {
 h1 {
     display: flex;
     align-items: center;
+    margin: 20px;
     font-size: 17px;
 }
 
@@ -169,9 +170,21 @@ main {
     margin: 0 10px;
 }
 
+.margin {
+    margin: 20px 5px 5px 0;
+}
 .color {
-    background-color: rgb(244, 131, 131);
+    background-color: rgba(215, 190, 241, 0.348);
     border: none;
+}
+
+.friends-and-wannabe {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #e4b4ee60;
+    padding: 20px;
+    margin: 20px;
 }
 
 .inputfile {

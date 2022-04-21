@@ -7,6 +7,7 @@ import Menu from "./menu";
 import OtherProfile from "./otherProfile";
 import { BrowserRouter, Route } from "react-router-dom";
 import Logo from "./logo";
+import FriendAndWannaBees from "./friends-wannabees";
 
 export default class App extends Component {
     constructor(props) {
@@ -60,7 +61,9 @@ export default class App extends Component {
                     <BrowserRouter>
                         <Logo />
 
+                        <div className="line"></div>
                         <Menu />
+
                         <Route exact path="/">
                             <Profile
                                 first={this.state.first}
@@ -80,6 +83,9 @@ export default class App extends Component {
                         />
                         <Route path="/friends">
                             <FindPeople />
+                        </Route>
+                        <Route path="/friendsandwannabees">
+                            <FriendAndWannaBees />
                         </Route>
                         <Route exact path="/user/:id">
                             <OtherProfile />

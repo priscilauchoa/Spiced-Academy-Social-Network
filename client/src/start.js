@@ -2,6 +2,16 @@ import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 import Logo from "./logo";
 import App from "./app";
+import { createStore, applyMiddleware } from "redux";
+import * as immutableState from "redux-immutable-state-invariant";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { Provider } from "react-redux";
+import rootReducer from "./redux/reducer";
+
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(immutableState.default()))
+);
 
 fetch("/user/id.json")
     .then((response) => response.json())
@@ -17,10 +27,11 @@ fetch("/user/id.json")
             );
         } else {
             ReactDOM.render(
-                <>
-                    <div className="line"></div>
-                    <App />
-                </>,
+                <Provider store={store}>
+                    <>
+                        <App />
+                    </>
+                </Provider>,
                 document.querySelector("main")
             );
         }
