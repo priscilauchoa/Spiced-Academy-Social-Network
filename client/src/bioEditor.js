@@ -22,7 +22,6 @@ export default class BioEditor extends Component {
         console.log("this.state.draftBio***", this.state);
         // this.setState({ draftBio: e.target.value });
         this.props.setBio(this.state.draftBio);
-     
 
         fetch("/bio", {
             method: "POST",
@@ -47,7 +46,7 @@ export default class BioEditor extends Component {
     }
 
     render() {
-        console.log("this.state-->", this.state);
+        // console.log("this.state-->", this.state);
         return (
             <div>
                 {!this.state.showTextArea && (

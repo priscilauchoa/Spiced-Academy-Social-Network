@@ -55,9 +55,13 @@ export default function FindPeople() {
                             src={user.profile_pic}
                             onClick={handleClick}
                         ></img>
-                        <p>
-                            {user.first} {user.last}
-                        </p>
+                        <div>
+                            <h1>
+                                {user.first} {user.last}
+                            </h1>
+
+                            <p>{user.email}</p>
+                        </div>
                     </li>
                 ))}
             </ul>

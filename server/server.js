@@ -13,6 +13,12 @@ const { uploader } = require("./upload");
 const cryptoRandomString = require("crypto-random-string");
 const s3 = require("./s3");
 
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
 // const {
 //     // requireLoggedOutUser,
 //     // requireLoggedInUser,
@@ -295,6 +301,44 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+let onlineUsers = [];
+
+io.on("connection", (socket) => {
+    console.log(`New connection established with user ${socket.id}`);
+    onlineUsers.push(socket.id);
+    console.log("onlineUsers: ", onlineUsers);
+
+    socket.emit("greeting", {
+        message: "Hello from the server",
+    });
+
+    socket.on("thanks", (data) => {
+        console.log("data: ", data);
+    });
+
+    socket.on("user-click", (data) => {
+        console.log("data: ", data);
+        io.emit(
+            "user-click-inform",
+            "HEY EVERYONE SOMEONE JUST CLICKED THE BUTTON"
+        );
+        socket.broadcast.emit("exceptMe", "Hey OTHER PEOPLE");
+        io.to(onlineUsers[0]).emit("private", {
+            message: "this is such a private message",
+        });
+        io.sockets.sockets.get(onlineUsers[0]).broadcast.emit("bob", {
+            message:
+                "bob i so annoying, i dont want him to read this message though",
+        });
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`User ${socket.id} just disconnected 😱`);
+        onlineUsers.filter((user) => user !== socket.id);
+        console.log("onlineUsers after disconnect: ", onlineUsers);
+    });
 });
