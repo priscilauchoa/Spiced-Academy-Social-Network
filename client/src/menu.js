@@ -4,7 +4,8 @@ export default function Menu() {
         <>
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="/">Profile</Link>
+                <Link to="/">Profile </Link>
+                <Link to="/chat">Chat</Link>
                 <Link to="/friends"> Find People</Link>
                 <Link to="/friendsandwannabees">My Friends</Link>
             </nav>

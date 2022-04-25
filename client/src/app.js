@@ -8,6 +8,7 @@ import OtherProfile from "./otherProfile";
 import { BrowserRouter, Route } from "react-router-dom";
 import Logo from "./logo";
 import FriendAndWannaBees from "./friends-wannabees";
+import { Chat } from "./chat.js";
 
 export default class App extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ export default class App extends Component {
         fetch("/user")
             .then((res) => res.json())
             .then(({ rows }) => {
-                console.log("data user", rows);
+                // console.log("data user", rows);
                 this.setState({
                     first: rows[0].first,
                     last: rows[0].last,
@@ -60,10 +61,8 @@ export default class App extends Component {
                 <>
                     <BrowserRouter>
                         <Logo />
-
                         <div className="line"></div>
                         <Menu />
-
                         <Route exact path="/">
                             <Profile
                                 first={this.state.first}
@@ -74,6 +73,7 @@ export default class App extends Component {
                                 clickHandler={this.handleProfilePictureClick}
                             />
                         </Route>
+
                         {/* <p>{this.state.first}</p> */}
                         <ProfilePic
                             styleCss="profile-pic-small"
@@ -81,6 +81,11 @@ export default class App extends Component {
                             img={this.state.profilePic}
                             clickHandler={this.handleProfilePictureClick}
                         />
+
+                        <Route path="/chat">
+                            <Chat />
+                        </Route>
+
                         <Route path="/friends">
                             <FindPeople />
                         </Route>

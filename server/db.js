@@ -88,6 +88,25 @@ exports.getFriendship = (currentUserId, otherUserId) => {
         [currentUserId, otherUserId]
     );
 };
+exports.getMessages = () => {
+    return db.query("SELECT * FROM chats  ORDER BY id DESC LIMIT 10");
+};
+exports.insertMessage = (id, message) => {
+    return db.query(
+        "INSERT INTO chats (from_id, message, user_id) VALUES ($1, $2, $1) RETURNING *",
+        [id, message]
+    );
+};
+
+// exports.insertMessage = (message, user_id) => {
+//     return db.query(
+//         `WITH “user”
+//         AS ( SELECT * FROM users WHERE id = $2),
+//         message AS (INSERT INTO chats (message, user_id, from_id) VALUES ($1, $2, $2) RETURNING message, user_id)
+//         SELECT first, last, profile_pic, message, user_id FROM “user”, message`,
+//         [message, user_id]
+//     );
+// };
 
 exports.acceptFriendshipRequest = (userId, otherUserId) => {
     return db.query(
@@ -103,6 +122,16 @@ exports.removeFriendship = (userId, otherUserId) => {
         `DELETE FROM friendship
         WHERE (recepient_id = $2 AND sender_id = $1) OR (recepient_id = $1 AND sender_id = $2)`,
         [userId, otherUserId]
+    );
+};
+
+exports.deleteUser = (userId) => {
+    return (
+        db.query(`
+        DELETE FROM chats INNER JOIN users  
+WHERE chats.user_id = users.id and chats.user_id = $1
+    `),
+        [userId]
     );
 };
 

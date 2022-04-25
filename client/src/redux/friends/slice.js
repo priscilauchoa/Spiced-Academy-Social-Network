@@ -2,7 +2,6 @@ export default function friendsWannaBeesReducer(friends = [], action) {
     // console.log("action payload in reducer -->", action.payload);
     if (action.type === "friends-wannabees/receive") {
         friends = action.payload.friends;
-        
     } else if (action.type === "friends-wannabees/accept") {
         friends = friends.map((friend) => {
             if (friend.id === action.payload.id) {
@@ -21,6 +20,7 @@ export default function friendsWannaBeesReducer(friends = [], action) {
     }
     return friends;
 }
+//______________________ACTIONS______________________________
 
 export function receiveFriendsAndWannaBees() {
     return async (dispatch) => {

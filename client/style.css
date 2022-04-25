@@ -11,6 +11,33 @@ body {
     font-family: "Roboto", sans-serif;
     align-items: center;
 }
+
+/* .chat {
+    display: flex;
+    border: 0.5px solid rgba(137, 43, 226, 0.471);
+    flex-direction: column;
+    padding: 10px;
+    height: 300px;
+    width: 200px;
+    overflow-y: auto;
+} */
+
+.chat-container {
+    display: flex;
+    border: 0.5px solid rgba(137, 43, 226, 0.471);
+    flex-direction: column;
+    padding: 10px;
+    height: 300px;
+    width: 200px;
+    overflow-y: auto;
+}
+.chat-textarea {
+    color: rgb(137, 105, 226);
+    margin: 0;
+    width: 195px;
+    padding: 12px;
+}
+
 .logo {
     width: 30px;
     height: 30px;

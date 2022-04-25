@@ -24,13 +24,18 @@ const io = require("socket.io")(server, {
 //     // requireLoggedInUser,
 // } = require("./middleware");
 
-app.use(
-    cookieSession({
-        secret: SESS_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: SESS_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+    sameSite: true,
+});
+
+app.use(cookieSessionMiddleware);
+
+io.use((socket, next) => {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -296,6 +301,9 @@ app.get("/friendship/:otherUserId", function (req, res) {
         }
     );
 });
+// app.get("/messages", function (req, res) {
+
+// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
@@ -305,40 +313,32 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-let onlineUsers = [];
+// let onlineUsers = [];
 
-io.on("connection", (socket) => {
-    console.log(`New connection established with user ${socket.id}`);
-    onlineUsers.push(socket.id);
-    console.log("onlineUsers: ", onlineUsers);
+io.on("connection", async function (socket) {
+    console.log("NEW CONNECTION");
 
-    socket.emit("greeting", {
-        message: "Hello from the server",
-    });
+    const userId = socket.request.session.userId;
+    console.log("userId", userId);
 
-    socket.on("thanks", (data) => {
-        console.log("data: ", data);
-    });
+    if (userId) {
+        //1- send last 10 messages
+        //1.a -
 
-    socket.on("user-click", (data) => {
-        console.log("data: ", data);
-        io.emit(
-            "user-click-inform",
-            "HEY EVERYONE SOMEONE JUST CLICKED THE BUTTON"
-        );
-        socket.broadcast.emit("exceptMe", "Hey OTHER PEOPLE");
-        io.to(onlineUsers[0]).emit("private", {
-            message: "this is such a private message",
+        db.getMessages().then(({ rows }) => {
+            socket.emit("last-10-messages", {
+                messages: rows,
+            });
         });
-        io.sockets.sockets.get(onlineUsers[0]).broadcast.emit("bob", {
-            message:
-                "bob i so annoying, i dont want him to read this message though",
-        });
-    });
 
-    socket.on("disconnect", () => {
-        console.log(`User ${socket.id} just disconnected 😱`);
-        onlineUsers.filter((user) => user !== socket.id);
-        console.log("onlineUsers after disconnect: ", onlineUsers);
-    });
+        socket.on("message", (data) => {
+            console.log("data", data);
+            db.insertMessage(userId, data.message).then(({ rows }) => {
+                console.log(rows);
+                io.emit("message-broadcast", rows[0]);
+            });
+        });
+    } else if (!userId) {
+        return socket.disconnect(true);
+    }
 });
