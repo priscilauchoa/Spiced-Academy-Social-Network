@@ -26,9 +26,8 @@ export function Chat() {
     return (
         <>
             <section>
+                <h1>Chat</h1>
                 <section ref={chatContainer} className="chat-container">
-                    <h1>Timeline</h1>
-
                     <div>
                         {messages.length > 0 &&
                             messages.map((message) => {
@@ -38,7 +37,9 @@ export function Chat() {
                                             className="profile-pic-chat"
                                             src={message.profile_pic}
                                         ></img>
-                                        <p>{message.first}: </p>
+                                        <p>
+                                            {message.first} {message.last}:{" "}
+                                        </p>
                                         <p>{message.message}</p>
                                     </div>
                                 );
@@ -52,8 +53,8 @@ export function Chat() {
                     placeholder="Write your message here"
                     onChange={handleChange}
                 ></textarea>
-                <button onClick={sendMessages}>Send Message</button>
             </section>
+            <button onClick={sendMessages}>Send Message</button>
         </>
     );
 }

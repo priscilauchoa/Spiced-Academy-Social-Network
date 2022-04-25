@@ -17,8 +17,9 @@ body {
     justify-content: space-between;
     background-color: #7af5e2;
     margin-top: 16px;
-    width: 150px;
+    width: 75%;
     height: 44px;
+    padding: 6px 15px 0px 0px;
     background: #eceff1;
     box-shadow: 5px 5px rgb(0 0 0 / 20%);
     border-radius: 100px;
@@ -35,6 +36,8 @@ textarea:focus::placeholder {
     height: 300px;
     width: 200px;
     overflow-y: auto;
+    width: 254px;
+    margin: 47px 0 12px 0px;
 }
 .chat-textarea {
     color: rgb(137, 105, 226);

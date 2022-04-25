@@ -5,7 +5,7 @@ export default function messagesReducer(messages = [], action) {
         console.log("action", action);
         return (messages = action.payload.reverse());
     } else if (action.type === "messages/new") {
-        return (messages = [...messages, action.payload]);
+        return (messages = [...messages, action.payload.message]);
     }
 
     return messages;
@@ -22,6 +22,7 @@ export function getAllMessages(data) {
 
 export function receiveNewMessages(message) {
     console.log("message in new messgs", message);
+
     return {
         type: "messages/new",
         payload: message,
