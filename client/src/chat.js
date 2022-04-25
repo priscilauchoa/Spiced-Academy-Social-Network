@@ -3,18 +3,18 @@ import { socket } from "./socket.js";
 import { useRef, useState, useEffect } from "react";
 
 export function Chat() {
-    const [value, setValue] = useState("Write a message here");
+    const [value, setValue] = useState("");
     const messages = useSelector((state) => state?.messages);
     const chatContainer = useRef();
     console.log("message)))))))--->", messages);
 
-   useEffect(() => {
+    useEffect(() => {
         chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }, [messages]);
 
-    };
-
     const sendMessages = () => {
+        setValue("");
+
         socket.emit("message", { message: value });
     };
 
@@ -22,6 +22,7 @@ export function Chat() {
         setValue(e.target.value);
         console.log("Value in use state", value);
     };
+
     return (
         <>
             <section>
@@ -32,8 +33,12 @@ export function Chat() {
                         {messages.length > 0 &&
                             messages.map((message) => {
                                 return (
-                                    <div key={message.id}>
-                                        <p>User: {message.from_id}</p>
+                                    <div className="chat" key={message.id}>
+                                        <img
+                                            className="profile-pic-chat"
+                                            src={message.profile_pic}
+                                        ></img>
+                                        <p>{message.first}: </p>
                                         <p>{message.message}</p>
                                     </div>
                                 );
@@ -43,7 +48,8 @@ export function Chat() {
 
                 <textarea
                     className="chat-textarea"
-                    defaultValue={value}
+                    value={value}
+                    placeholder="Write your message here"
                     onChange={handleChange}
                 ></textarea>
                 <button onClick={sendMessages}>Send Message</button>

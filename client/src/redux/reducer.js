@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import friendsReducer from "./friends/slice.js";
 import messagesReducer from "./messages/slice.js";
+import onlineUsersReducer from "./onlineUsers/slice.js";
 
 const rootReducer = combineReducers({
     FriendsWannaBees: friendsReducer,
     messages: messagesReducer,
+    onlineUsers: onlineUsersReducer,
 });
 
 export default rootReducer;

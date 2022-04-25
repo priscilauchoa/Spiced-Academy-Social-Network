@@ -9,11 +9,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Logo from "./logo";
 import FriendAndWannaBees from "./friends-wannabees";
 import { Chat } from "./chat.js";
+import DeleteModal from "./deleteModal";
+import { OnlineUsers } from "./onlineUsersList.js";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { isModalOpened: false };
+        this.state = { isModalOpened: false, showDeleteModal: false };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.setBio = this.setBio.bind(this);
     }
@@ -59,6 +61,15 @@ export default class App extends Component {
         if (!this.state.id) {
             return (
                 <>
+                    <OnlineUsers />
+                    <button
+                        onClick={() => this.setState({ showDeleteModal: true })}
+                    >
+                        Delete account
+                    </button>
+
+                    {this.state.showDeleteModal && <DeleteModal />}
+
                     <BrowserRouter>
                         <Logo />
                         <div className="line"></div>
@@ -73,7 +84,6 @@ export default class App extends Component {
                                 clickHandler={this.handleProfilePictureClick}
                             />
                         </Route>
-
                         {/* <p>{this.state.first}</p> */}
                         <ProfilePic
                             styleCss="profile-pic-small"
@@ -81,11 +91,9 @@ export default class App extends Component {
                             img={this.state.profilePic}
                             clickHandler={this.handleProfilePictureClick}
                         />
-
                         <Route path="/chat">
                             <Chat />
                         </Route>
-
                         <Route path="/friends">
                             <FindPeople />
                         </Route>

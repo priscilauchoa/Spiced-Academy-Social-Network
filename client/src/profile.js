@@ -4,6 +4,7 @@ import ProfileHeader from "./profileHeader";
 export default function Profile(props) {
     const bioContent = <BioEditor bio={props.bio} setBio={props.setBio} />;
     return (
+        
         <ProfileHeader
             profilePic={props.img}
             firstName={props.first}

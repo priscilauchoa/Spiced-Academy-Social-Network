@@ -217,12 +217,31 @@ app.post("/friendsandwannabee", function (req, res) {
         }
     );
 });
+
 app.post("/friendsandwannabee/unfriend", function (req, res) {
     // console.log("id unfriend--->", req.session.userId, req.body.id);
     db.removeFriendship(req.session.userId, req.body.id).then(({ rows }) => {
         console.log("friends and wanna be", rows);
         res.json({ success: true }).status(200);
     });
+});
+
+app.post("/delete-user", function (req, res) {
+    db.deleteChat(req.session.userId)
+        .then(() => {
+            console.log("session: ", req.session.userId);
+        })
+        .then(() => {
+            db.deleteFriendship(req.session.userId);
+        })
+        .then(() => {
+            db.deleteUser(req.session.userId);
+        })
+        .then(() => {
+            req.session = null;
+            res.json({ success: true }).status(200);
+        })
+        .catch((error) => console.log(error));
 });
 
 app.get("/users/:search", function (req, res) {
@@ -313,7 +332,7 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-// let onlineUsers = [];
+let onlineUsers = [];
 
 io.on("connection", async function (socket) {
     console.log("NEW CONNECTION");
@@ -321,9 +340,14 @@ io.on("connection", async function (socket) {
     const userId = socket.request.session.userId;
     console.log("userId", userId);
 
+    onlineUsers.push(userId);
+
     if (userId) {
         //1- send last 10 messages
         //1.a -
+        socket.emit("online-users", {
+            onlineUsers: onlineUsers,
+        });
 
         db.getMessages().then(({ rows }) => {
             socket.emit("last-10-messages", {

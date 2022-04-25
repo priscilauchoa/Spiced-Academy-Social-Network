@@ -10,11 +10,11 @@ import rootReducer from "./redux/reducer";
 import thunk from "redux-thunk";
 import { init } from "./socket.js";
 
+
 const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk))
 );
-
 
 fetch("/user/id.json")
     .then((response) => response.json())
@@ -34,6 +34,7 @@ fetch("/user/id.json")
             ReactDOM.render(
                 <Provider store={store}>
                     <>
+                       
                         <App />
                     </>
                 </Provider>,

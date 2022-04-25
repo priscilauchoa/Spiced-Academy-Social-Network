@@ -89,7 +89,13 @@ exports.getFriendship = (currentUserId, otherUserId) => {
     );
 };
 exports.getMessages = () => {
-    return db.query("SELECT * FROM chats  ORDER BY id DESC LIMIT 10");
+    // return db.query("SELECT * FROM chats  ORDER BY id DESC LIMIT 10");
+    return db.query(`SELECT chats.id AS message_id, chats.user_id AS user_id, first, last, profile_pic, message
+            FROM chats
+            JOIN users
+            ON chats.user_id = users.id
+            ORDER BY chats.id DESC
+            LIMIT 10`);
 };
 exports.insertMessage = (id, message) => {
     return db.query(
@@ -126,11 +132,20 @@ exports.removeFriendship = (userId, otherUserId) => {
 };
 
 exports.deleteUser = (userId) => {
-    return (
-        db.query(`
-        DELETE FROM chats INNER JOIN users  
-WHERE chats.user_id = users.id and chats.user_id = $1
-    `),
+    return db.query(`DELETE from users WHERE id = $1`, [userId]);
+};
+
+exports.deleteChat = (userId) => {
+    return db.query(
+        `
+      DELETE from chats WHERE user_id = $1`,
+        [userId]
+    );
+};
+exports.deleteFriendship = (userId) => {
+    return db.query(
+        `DELETE from friendship WHERE user_id = $1 OR recepient_id = $1
+  `,
         [userId]
     );
 };
@@ -146,3 +161,11 @@ exports.getFriendsAndWannaBees = (userId) => {
         [userId]
     );
 };
+
+// DELETE users FROM users JOIN chats ON chats.user_id = users.id WHERE users.id = 1;
+
+// DELETE users.*, chats.*
+// FROM chats
+// LEFT JOIN users
+// ON chats.user_id = users.id
+// WHERE user.id = 1
