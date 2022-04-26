@@ -247,7 +247,7 @@ app.post("/delete-user", function (req, res) {
         })
         .then(() => {
             req.session = null;
-            console.log("Photo deleted from aws");
+            // console.log("Photo deleted from aws");
             res.json({ success: true }).status(200);
         })
         .catch((error) => console.log(error));
@@ -341,31 +341,33 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-let onlineUsers = [];
-let onlineUsersSocket = {};
+let onlineUsers = {};
+// let onlineUsersSocket = {};
 
 io.on("connection", async function (socket) {
     console.log("NEW CONNECTION");
+    // onlineUsersSocket[socket.id] = userId;
 
     const userId = socket.request.session.userId;
-    onlineUsersSocket[socket.id] = userId;
-
-    db.getUser(userId)
-        .then(({ rows }) => {
-            console.log("os users online", rows);
-            rows.push(userId);
-
-            onlineUsers.push(rows[0]);
-            console.log("online users", onlineUsers);
-        })
-        .then(() => {
-            console.log("finalll", onlineUsers);
-            if (userId) {
-                socket.emit("online-users", {
-                    onlineUsers: onlineUsers,
-                });
-            }
+    // onlineUsers[socket.id] = userId;
+    const sendOnlineUsers = () => {
+        //return an array of the object values
+        const userValues = Object.values(onlineUsers);
+        const userIds = userValues.map((a) => a.id);
+        const users = Array.from(new Set(userIds)).map((id) => {
+            return userValues.find((a) => a.id === id);
         });
+
+        socket.emit("online-users", users);
+        io.emit("online-users", users);
+    };
+    db.getUser(userId).then(({ rows }) => {
+        console.log("os users online", rows);
+        onlineUsers[socket.id] = rows[0];
+        console.log("online users", onlineUsers);
+
+        sendOnlineUsers();
+    });
 
     db.getMessages().then(({ rows }) => {
         socket.emit("last-10-messages", {
@@ -397,7 +399,8 @@ io.on("connection", async function (socket) {
     });
 
     socket.on("disconnect", () => {
-        delete onlineUsersSocket[socket.id];
-        console.log("onlineUsersSocket", onlineUsersSocket);
+        delete onlineUsers[socket.id];
+        sendOnlineUsers();
+        console.log("onlineUsersSocket", onlineUsers);
     });
 });

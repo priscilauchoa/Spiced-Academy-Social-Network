@@ -4,8 +4,8 @@ export default function onlineUsersReducer(onlineUsers = [], action) {
     if (action.type === "online-users/received") {
         console.log("action", action);
 
-        onlineUsers = [...onlineUsers, ...action.payload];
-        console.log("online----", onlineUsers);
+        console.log("online----", action.payload);
+        return [...action.payload];
         // const newArray = [
         //     ...new Map(
         //         onlineUsers.map((item) => [item[item.id], item])
@@ -13,13 +13,12 @@ export default function onlineUsersReducer(onlineUsers = [], action) {
         // ];
         // console.log("UNIQUE", newArray);
 
-        onlineUsers = Array.from(new Set(onlineUsers.map((a) => a.id))).map(
-            (id) => {
-                return onlineUsers.find((a) => a.id === id);
-            }
-        );
+        // onlineUsers = Array.from(new Set(onlineUsers.map((a) => a.id))).map(
+        //     (id) => {
+        //         return onlineUsers.find((a) => a.id === id);
+        //     }
+        // );
 
-        return onlineUsers;
         // return onlineUsers;
         // } else if (action.type === "online-users/new") {
         //     return (onlineUsers = [...onlineUsers, action.payload]);
@@ -31,10 +30,10 @@ export default function onlineUsersReducer(onlineUsers = [], action) {
 //______________________ACTIONS______________________________;
 
 export function showOnlineUsers(data) {
-    console.log("here -->", data.onlineUsers);
+    console.log("here -->", data);
     return {
         type: "online-users/received",
-        payload: data.onlineUsers,
+        payload: data,
     };
 }
 

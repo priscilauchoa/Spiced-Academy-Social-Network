@@ -39,7 +39,7 @@ export function OnlineUsers() {
                                     <>
                                         <div
                                             className="online-users"
-                                            key={user}
+                                            key={user.id}
                                         >
                                             <img
                                                 className="profile-pic-chat"
