@@ -166,7 +166,7 @@ app.post("/password/reset/verify", (req, res) => {
             // res.json({ success: false });
         })
         .catch((err) => {
-            // console.log("error verify code secret", err);
+            console.log("error verify code secret", err);
             res.json({ success: false });
         });
 });

@@ -89,7 +89,7 @@ exports.getFriendship = (currentUserId, otherUserId) => {
     );
 };
 exports.getMessages = () => {
-    // return db.query("SELECT * FROM chats  ORDER BY id DESC LIMIT 10");
+    // return db.query("SELECT * FROM chats ORDER BY id DESC LIMIT 10");
     return db.query(`SELECT chats.id AS message_id, chats.user_id AS user_id, first, last, profile_pic, message
             FROM chats
             JOIN users
