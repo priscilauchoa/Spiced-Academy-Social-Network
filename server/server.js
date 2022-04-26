@@ -227,9 +227,17 @@ app.post("/friendsandwannabee/unfriend", function (req, res) {
 });
 
 app.post("/delete-user", function (req, res) {
-    db.deleteChat(req.session.userId)
+    db.getUser(req.session.userId)
+        .then(({ rows }) => {
+            console.log("rows---> &&", rows);
+            const params = {
+                Bucket: "priscilasbucket",
+                Key: rows[0].profile_pic,
+            };
+            s3.deleteObject(params);
+        })
         .then(() => {
-            console.log("session: ", req.session.userId);
+            db.deleteChat(req.session.userId);
         })
         .then(() => {
             db.deleteFriendship(req.session.userId);
@@ -239,6 +247,7 @@ app.post("/delete-user", function (req, res) {
         })
         .then(() => {
             req.session = null;
+            console.log("Photo deleted from aws");
             res.json({ success: true }).status(200);
         })
         .catch((error) => console.log(error));
@@ -339,30 +348,43 @@ io.on("connection", async function (socket) {
 
     const userId = socket.request.session.userId;
     console.log("userId", userId);
+    db.getUser(userId)
+        .then(({ rows }) => {
+            console.log("os users online", rows);
 
-    onlineUsers.push(userId);
 
-    if (userId) {
-        //1- send last 10 messages
-        //1.a -
-        socket.emit("online-users", {
-            onlineUsers: onlineUsers,
+
+
+
+
+
+
+            
+            onlineUsers.push(rows[0]);
+            console.log("online users", onlineUsers);
+        })
+        .then(() => {
+            console.log("finalll", onlineUsers);
+            if (userId) {
+                socket.emit("online-users", {
+                    onlineUsers: onlineUsers,
+                });
+
+                db.getMessages().then(({ rows }) => {
+                    socket.emit("last-10-messages", {
+                        messages: rows,
+                    });
+                });
+
+                socket.on("message", (data) => {
+                    console.log("data", data);
+                    db.insertMessage(userId, data.message).then(({ rows }) => {
+                        console.log(rows);
+                        io.emit("message-broadcast", rows[0]);
+                    });
+                });
+            } else if (!userId) {
+                return socket.disconnect(true);
+            }
         });
-
-        db.getMessages().then(({ rows }) => {
-            socket.emit("last-10-messages", {
-                messages: rows,
-            });
-        });
-
-        socket.on("message", (data) => {
-            console.log("data", data);
-            db.insertMessage(userId, data.message).then(({ rows }) => {
-                console.log(rows);
-                io.emit("message-broadcast", rows[0]);
-            });
-        });
-    } else if (!userId) {
-        return socket.disconnect(true);
-    }
 });

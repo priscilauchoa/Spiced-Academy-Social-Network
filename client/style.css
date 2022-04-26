@@ -25,6 +25,15 @@ body {
     border-radius: 100px;
 }
 
+.online-users {
+    background-color: rgb(148, 231, 243);
+    width: 38%;
+    margin: 20px 0;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
 textarea:focus::placeholder {
     color: transparent;
 }

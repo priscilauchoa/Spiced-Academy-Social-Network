@@ -14,7 +14,6 @@ export function Chat() {
 
     const sendMessages = () => {
         setValue("");
-
         socket.emit("message", { message: value });
     };
 

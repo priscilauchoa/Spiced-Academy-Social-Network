@@ -1,50 +1,56 @@
 import { useSelector } from "react-redux";
+import { useState } from "react";
+// import { useEffect } from "react";
+// import { showOnlineUsers } from "./redux/onlineUsers/slice.js";
 // import { socket } from "./socket.js";
 // import { useRef, useState, useEffect } from "react";
 
 export function OnlineUsers() {
-    // const [value, setValue] = useState("");
-    const onlineUsers = useSelector((state) => state?.onlineUsers);
-    // const chatContainer = useRef();
-    // console.log("message)))))))--->", messages);
+    const [isUserOnlineOpened, setIsUserOnlineOpened] = useState(false);
+    // const dispatch = useDispatch();
+    let onlineUsers = useSelector((state) => state.onlineUsers);
+    console.log("online users from component--->", onlineUsers);
+    // onlineUsers = [...new Set(onlineUsers)];
 
     // useEffect(() => {
-    //     chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
-    // }, [messages]);
+    //     dispatch(showOnlineUsers(onlineUsers.id));
+    // }, []);
 
-    // const sendMessages = () => {
-    //     setValue("");
-
-    //     socket.emit("message", { message: value });
-    // };
-
-    // const handleChange = (e) => {
-    //     setUsers(e.target.value);
-    //     console.log("Value in use state", value);
-    // };
+    const handleOnClick = () => {
+        setIsUserOnlineOpened(true);
+    };
 
     return (
         <>
             <section>
-                {/* <section ref={chatContainer} className="chat-container">
-                    <h1>Timeline</h1> */}
+                <button onClick={handleOnClick}> Users online</button>
 
-                <div>
-                    {onlineUsers.length > 0 &&
-                        onlineUsers.map((user) => {
-                            return (
-                                <div className="chat" key={user.id}>
-                                    {" "}
-                                    Users online
-                                    <img
-                                        className="profile-pic-chat"
-                                        src=""
-                                    ></img>
-                                    <p>{user.id}: </p>
-                                </div>
-                            );
-                        })}
-                </div>
+                {isUserOnlineOpened && (
+                    <div>
+                        {onlineUsers.length > 0 &&
+                            onlineUsers.map((user) => {
+                                return (
+                                    <div className="online-users" key={user}>
+                                        <img
+                                            className="profile-pic-chat"
+                                            src={user.profile_pic}
+                                        ></img>
+                                        <p>
+                                            User: {user.first} {user.last}
+                                        </p>
+                                        <button
+                                            onClick={() => {
+                                                setIsUserOnlineOpened(false);
+                                            }}
+                                        >
+                                            {" "}
+                                            Close
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                )}
             </section>
 
             {/* <textarea

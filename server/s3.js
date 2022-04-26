@@ -13,6 +13,13 @@ const s3 = new aws.S3({
     secretAccessKey: secrets.AWS_SECRET,
 });
 
+exports.deleteObject = (params) => {
+    s3.deleteObject(params, function (err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else console.log(data); // successful response
+    });
+};
+
 exports.upload = (req, res, next) => {
     if (!req.file) {
         return res.sendStatus(500);

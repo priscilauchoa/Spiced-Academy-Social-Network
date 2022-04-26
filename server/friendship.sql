@@ -21,9 +21,9 @@ INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,13,13);
 INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,14,914);
 
 INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (7,205,205);
-INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,77,77);
-INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,75,75);
-INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,84,84);
+INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (20,77,77);
+INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (20,75,75);
+INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (20,84,84);
 INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,93,93);
 INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,104,104);
 INSERT INTO friendship (recepient_id, sender_id, user_id) VALUES (205,113,113);
