@@ -23,9 +23,13 @@ export function OnlineUsers() {
     return (
         <>
             <section>
-                {!isUserOnlineOpened && (
-                    <button onClick={handleOnClick}> Users online</button>
-                )}
+                <button className="button-online" onClick={handleOnClick}>
+                    {onlineUsers.length}
+                    <img
+                        className="online-img"
+                        src="https://www.designbust.com/download/325/png/user_online_icon512.png"
+                    ></img>
+                </button>
 
                 {isUserOnlineOpened && (
                     <div className="online-div">
@@ -48,7 +52,8 @@ export function OnlineUsers() {
                                     </>
                                 );
                             })}
-                        <button className="button-close"
+                        <button
+                            className="button-close"
                             onClick={() => {
                                 setIsUserOnlineOpened(false);
                             }}

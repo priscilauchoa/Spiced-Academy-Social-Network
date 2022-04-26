@@ -25,19 +25,31 @@ body {
     border-radius: 100px;
 }
 .online-div {
-    background-color: rgb(148, 231, 243);
+    background-color: rgb(202, 245, 251);
     position: absolute;
     z-index: 1;
+    top: 20px;
+    width: 230px;
 }
-
+.button-online {
+    background-color: transparent;
+    color: #a766ff;
+    font-size: 15px;
+}
+.online-img {
+    width: 30px;
+}
 .button-close {
-    margin-left: 70%;
-    margin-bottom: 5px;
+    margin-left: 75%;
+    margin-bottom: 6px;
 }
 .online-users {
     color: white;
     padding: 20px;
     display: flex;
+}
+.online-users p {
+    color: blueviolet;
 }
 .online-users img {
     margin: 0 10px 0 0;

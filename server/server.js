@@ -342,15 +342,18 @@ server.listen(process.env.PORT || 3001, function () {
 });
 
 let onlineUsers = [];
+let onlineUsersSocket = {};
 
 io.on("connection", async function (socket) {
     console.log("NEW CONNECTION");
 
     const userId = socket.request.session.userId;
+    onlineUsersSocket[socket.id] = userId;
 
     db.getUser(userId)
         .then(({ rows }) => {
             console.log("os users online", rows);
+            rows.push(userId);
 
             onlineUsers.push(rows[0]);
             console.log("online users", onlineUsers);
@@ -361,37 +364,40 @@ io.on("connection", async function (socket) {
                 socket.emit("online-users", {
                     onlineUsers: onlineUsers,
                 });
-
-                db.getMessages().then(({ rows }) => {
-                    socket.emit("last-10-messages", {
-                        messages: rows,
-                    });
-                });
-
-                socket.on("message", (data) => {
-                    console.log("data", data);
-                    db.insertMessage(data.message, userId   ).then(({ rows }) => {
-                        console.log(rows);
-                        io.emit("message-broadcast", rows[0]);
-                    });
-
-                    //  let messageAndUser = [];
-                    //                     db.insertMessage(userId, data.message)
-                    //                         .then((rows) => {
-                    //                             messageAndUser = [...messageAndUser, rows];
-                    //                             console.log(rows);
-                    //                         })
-                    //                         .then(() => {
-                    //                             db.getUser(userId).then(({ rows }) => {
-                    //                                 console.log(rows);
-                    //                                 messageAndUser = [...messageAndUser, rows[0]];
-                    //                                 console.log(messageAndUser);
-                    //                                 io.emit("message-broadcast", rows[0]);
-                    //                             });
-                    //                         });
-                });
-            } else if (!userId) {
-                return socket.disconnect(true);
             }
         });
+
+    db.getMessages().then(({ rows }) => {
+        socket.emit("last-10-messages", {
+            messages: rows,
+        });
+    });
+
+    socket.on("message", (data) => {
+        console.log("data", data);
+        db.insertMessage(data.message, userId).then(({ rows }) => {
+            console.log(rows);
+            io.emit("message-broadcast", rows[0]);
+        });
+
+        //  let messageAndUser = [];
+        //                     db.insertMessage(userId, data.message)
+        //                         .then((rows) => {
+        //                             messageAndUser = [...messageAndUser, rows];
+        //                             console.log(rows);
+        //                         })
+        //                         .then(() => {
+        //                             db.getUser(userId).then(({ rows }) => {
+        //                                 console.log(rows);
+        //                                 messageAndUser = [...messageAndUser, rows[0]];
+        //                                 console.log(messageAndUser);
+        //                                 io.emit("message-broadcast", rows[0]);
+        //                             });
+        //                         });
+    });
+
+    socket.on("disconnect", () => {
+        delete onlineUsersSocket[socket.id];
+        console.log("onlineUsersSocket", onlineUsersSocket);
+    });
 });
