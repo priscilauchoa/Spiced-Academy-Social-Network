@@ -23,32 +23,38 @@ export function OnlineUsers() {
     return (
         <>
             <section>
-                <button onClick={handleOnClick}> Users online</button>
+                {!isUserOnlineOpened && (
+                    <button onClick={handleOnClick}> Users online</button>
+                )}
 
                 {isUserOnlineOpened && (
-                    <div>
+                    <div className="online-div">
                         {onlineUsers.length > 0 &&
                             onlineUsers.map((user) => {
                                 return (
-                                    <div className="online-users" key={user}>
-                                        <img
-                                            className="profile-pic-chat"
-                                            src={user.profile_pic}
-                                        ></img>
-                                        <p>
-                                            User: {user.first} {user.last}
-                                        </p>
-                                        <button
-                                            onClick={() => {
-                                                setIsUserOnlineOpened(false);
-                                            }}
+                                    <>
+                                        <div
+                                            className="online-users"
+                                            key={user}
                                         >
-                                            {" "}
-                                            Close
-                                        </button>
-                                    </div>
+                                            <img
+                                                className="profile-pic-chat"
+                                                src={user.profile_pic}
+                                            ></img>
+                                            <p>
+                                                {user.first} {user.last}
+                                            </p>
+                                        </div>
+                                    </>
                                 );
                             })}
+                        <button className="button-close"
+                            onClick={() => {
+                                setIsUserOnlineOpened(false);
+                            }}
+                        >
+                            Close
+                        </button>
                     </div>
                 )}
             </section>

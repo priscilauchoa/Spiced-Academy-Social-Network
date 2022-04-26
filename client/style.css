@@ -24,15 +24,23 @@ body {
     box-shadow: 5px 5px rgb(0 0 0 / 20%);
     border-radius: 100px;
 }
-
-.online-users {
+.online-div {
     background-color: rgb(148, 231, 243);
-    width: 38%;
-    margin: 20px 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.button-close {
+    margin-left: 70%;
+    margin-bottom: 5px;
+}
+.online-users {
     color: white;
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+}
+.online-users img {
+    margin: 0 10px 0 0;
 }
 textarea:focus::placeholder {
     color: transparent;
@@ -72,9 +80,33 @@ textarea:focus::placeholder {
     height: 30px;
     border-radius: 50%;
     right: 22%;
-    top: 9px;
+    top: 31px;
     margin: 20px;
     position: absolute;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    width: 47%;
+    align-items: center;
+    /* background-color: red; */
+    justify-content: space-evenly;
+}
+
+.center div {
+    display: flex;
+    justify-content: space-evenly;
+    width: 45%;
+}
+
+.delete-user {
+    position: absolute;
+    background: transparent;
+    right: 18.5%;
+    top: 5px;
+    width: 35px;
+    color: transparent;
 }
 
 .logout-button {

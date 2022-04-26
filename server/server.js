@@ -229,10 +229,10 @@ app.post("/friendsandwannabee/unfriend", function (req, res) {
 app.post("/delete-user", function (req, res) {
     db.getUser(req.session.userId)
         .then(({ rows }) => {
-            console.log("rows---> &&", rows);
+            console.log("rows---> &&", rows[0].profile_pic);
             const params = {
                 Bucket: "priscilasbucket",
-                Key: rows[0].profile_pic,
+                Key: rows[0].profile_pic.split("priscilasbucket/")[1],
             };
             s3.deleteObject(params);
         })
@@ -347,19 +347,11 @@ io.on("connection", async function (socket) {
     console.log("NEW CONNECTION");
 
     const userId = socket.request.session.userId;
-    console.log("userId", userId);
+
     db.getUser(userId)
         .then(({ rows }) => {
             console.log("os users online", rows);
 
-
-
-
-
-
-
-
-            
             onlineUsers.push(rows[0]);
             console.log("online users", onlineUsers);
         })
@@ -378,10 +370,25 @@ io.on("connection", async function (socket) {
 
                 socket.on("message", (data) => {
                     console.log("data", data);
-                    db.insertMessage(userId, data.message).then(({ rows }) => {
+                    db.insertMessage(data.message, userId   ).then(({ rows }) => {
                         console.log(rows);
                         io.emit("message-broadcast", rows[0]);
                     });
+
+                    //  let messageAndUser = [];
+                    //                     db.insertMessage(userId, data.message)
+                    //                         .then((rows) => {
+                    //                             messageAndUser = [...messageAndUser, rows];
+                    //                             console.log(rows);
+                    //                         })
+                    //                         .then(() => {
+                    //                             db.getUser(userId).then(({ rows }) => {
+                    //                                 console.log(rows);
+                    //                                 messageAndUser = [...messageAndUser, rows[0]];
+                    //                                 console.log(messageAndUser);
+                    //                                 io.emit("message-broadcast", rows[0]);
+                    //                             });
+                    //                         });
                 });
             } else if (!userId) {
                 return socket.disconnect(true);

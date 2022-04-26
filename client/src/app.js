@@ -63,9 +63,14 @@ export default class App extends Component {
                 <>
                     <OnlineUsers />
                     <button
+                        className="delete-user"
                         onClick={() => this.setState({ showDeleteModal: true })}
                     >
-                        Delete account
+                        
+                        <img
+                            className="delete-user"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF6gLEB90OogGTAtnnFyElt4SGMKK2xswSzg&usqp=CAU"
+                        ></img>
                     </button>
 
                     {this.state.showDeleteModal && <DeleteModal />}

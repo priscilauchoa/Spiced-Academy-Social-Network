@@ -97,22 +97,16 @@ exports.getMessages = () => {
             ORDER BY chats.id DESC
             LIMIT 10`);
 };
-exports.insertMessage = (id, message) => {
+
+exports.insertMessage = (message, user_id) => {
     return db.query(
-        "INSERT INTO chats (from_id, message, user_id) VALUES ($1, $2, $1) RETURNING *",
-        [id, message]
+        `WITH “user”
+        AS ( SELECT * FROM users WHERE id = $2),
+        message AS (INSERT INTO chats (message, user_id, from_id) VALUES ($1, $2, $2) RETURNING message, user_id)
+        SELECT first, last, profile_pic, message, user_id FROM “user”, message`,
+        [message, user_id]
     );
 };
-
-// exports.insertMessage = (message, user_id) => {
-//     return db.query(
-//         `WITH “user”
-//         AS ( SELECT * FROM users WHERE id = $2),
-//         message AS (INSERT INTO chats (message, user_id, from_id) VALUES ($1, $2, $2) RETURNING message, user_id)
-//         SELECT first, last, profile_pic, message, user_id FROM “user”, message`,
-//         [message, user_id]
-//     );
-// };
 
 exports.acceptFriendshipRequest = (userId, otherUserId) => {
     return db.query(

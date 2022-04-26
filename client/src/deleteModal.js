@@ -10,7 +10,6 @@ export default function DeleteUser() {
             .then((res) => res.json())
             .then(() => {
                 location.reload("/");
-                
             })
             .catch((err) => {
                 console.log("err", err);
@@ -24,10 +23,12 @@ export default function DeleteUser() {
     return (
         <>
             <section className="modal">
-                <section className="modal-content">
+                <section className="modal-content center">
                     <h1>Are you sure you want delete your account? ⚠️ </h1>
-                    <button onClick={handleClickDelete}>Yes</button>;
-                    <button onClick={handleCloseModal}>No</button>;
+                    <div>
+                        <button onClick={handleClickDelete}>Yes</button>
+                        <button onClick={handleCloseModal}>No</button>
+                    </div>
                 </section>
             </section>
         </>

@@ -21,7 +21,7 @@ export function getAllMessages(data) {
 }
 
 export function receiveNewMessages(message) {
-    // console.log("message in new messgs", message);
+    console.log("message in new messgs", message);
     return {
         type: "messages/new",
         payload: message,

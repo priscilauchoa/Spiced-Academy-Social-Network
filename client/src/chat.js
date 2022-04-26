@@ -6,14 +6,14 @@ export function Chat() {
     const [value, setValue] = useState("");
     const messages = useSelector((state) => state?.messages);
     const chatContainer = useRef();
-    console.log("message)))))))--->", messages);
+    console.log("message))))))--->", messages);
 
     useEffect(() => {
         chatContainer.current.scrollTop = chatContainer.current.scrollHeight;
     }, [messages]);
 
     const sendMessages = () => {
-        setValue("");
+        // setValue("");
         socket.emit("message", { message: value });
     };
 
@@ -37,7 +37,7 @@ export function Chat() {
                                             src={message.profile_pic}
                                         ></img>
                                         <p>
-                                            {message.first} {message.last}:{" "}
+                                            {message.first} {message.last}
                                         </p>
                                         <p>{message.message}</p>
                                     </div>
