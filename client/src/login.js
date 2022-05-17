@@ -52,7 +52,9 @@ export class Login extends Component {
         return (
             <section className="div-form">
                 <h1>Login here</h1>
-                {this.state.error && <h2>Something went wrong in the Login</h2>}
+                {this.state.error && (
+                    <h2>Something went wrong with the login</h2>
+                )}
                 <form className="form">
                     <input
                         name="email"
@@ -66,7 +68,9 @@ export class Login extends Component {
                         type="password"
                         onChange={this.handleChange}
                     ></input>
-                    <button className="btn-submit" onClick={this.handleSubmit}>Login</button>
+                    <button className="btn-submit" onClick={this.handleSubmit}>
+                        Login
+                    </button>
                     <div className="reg-log">
                         <Link to="/">Register</Link>
                         <Link to="/login"> Log in</Link>

@@ -91,10 +91,7 @@ app.get("/user/id.json", function (req, res) {
 });
 
 app.get("/user", function (req, res) {
-    // console.log(req.session.userId);
-    // console.log("session id-->", req.session.userId);
     db.getUser(req.session.userId).then(({ rows }) => {
-        // console.log(rows[0].profile_pic);
         res.json({ rows });
     });
 });

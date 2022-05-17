@@ -18,6 +18,7 @@ export default class App extends Component {
         this.state = { isModalOpened: false, showDeleteModal: false };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.setBio = this.setBio.bind(this);
+        
     }
 
     componentDidMount() {

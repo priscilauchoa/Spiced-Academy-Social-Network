@@ -13,8 +13,8 @@ export function Chat() {
     }, [messages]);
 
     const sendMessages = () => {
-        // setValue("");
         socket.emit("message", { message: value });
+        setValue("");
     };
 
     const handleChange = (e) => {
@@ -37,9 +37,10 @@ export function Chat() {
                                             src={message.profile_pic}
                                         ></img>
                                         <p>
-                                            {message.first} {message.last}
+                                            {message.first} {message.last}:
+                                            {"  "}
+                                            {message.message}
                                         </p>
-                                        <p>{message.message}</p>
                                     </div>
                                 );
                             })}

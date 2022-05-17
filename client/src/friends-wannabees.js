@@ -60,6 +60,7 @@ export default function FriendAndWannaBees() {
     return (
         <section>
             <h1>Friends</h1>
+
             <section className="friends-and-wannabe">
                 {friends.map((friend) => {
                     return (
@@ -69,7 +70,7 @@ export default function FriendAndWannaBees() {
                                 className="profile-pic"
                                 src={friend.profile_pic}
                             ></img>
-                            {friend.first}
+                            {friend.first} {friend.last}
                             <button
                                 className="cancel-request margin"
                                 onClick={() => handleClickUnfriend(friend.id)}
@@ -80,7 +81,8 @@ export default function FriendAndWannaBees() {
                     );
                 })}
             </section>
-            <h1>Wannabees</h1>
+            <h1>Friendship requests</h1>
+
             <section className="friends-and-wannabe">
                 {wannabees.map((wannabee) => {
                     return (
@@ -89,8 +91,7 @@ export default function FriendAndWannaBees() {
                                 className="profile-pic"
                                 src={wannabee.profile_pic}
                             ></img>
-                            {wannabee.first}
-
+                            {wannabee.first} {wannabee.last}
                             <div>
                                 <button
                                     className="accept-request margin"

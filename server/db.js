@@ -15,6 +15,7 @@ exports.registerCode = (email, code) => {
         email,
     ]);
 };
+
 exports.changeProfilePic = (id, profilePic) => {
     return db.query(
         `UPDATE users
